@@ -8,34 +8,92 @@
 
 import SpriteKit
 
+var refer: SKSpriteNode!
+var refer2: SKSpriteNode!
+var note: SKSpriteNode!
+
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 65;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
+
+        self.backgroundColor = SKColor.whiteColor()
         
-        self.addChild(myLabel)
+        note = SKSpriteNode(imageNamed: "note.png")
+        note.position = CGPointMake(200, 600)
+        addChild(note)
+        
+        refer = SKSpriteNode(imageNamed: "point.png")
+        refer.position = CGPointMake(200, 400)
+        refer.zPosition = 0
+        addChild(refer)
+        
+        refer2 = SKSpriteNode(imageNamed: "point2.png")
+        refer2.position = CGPointMake(300, 400)
+        refer.zPosition = 0
+        addChild(refer2)
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
         
-        for touch in (touches as! Set<UITouch>) {
-            let location = touch.locationInNode(self)
+        let t = touches.first
+        let touchItem = t as! UITouch
+        let location = touchItem.locationInNode(self)
+        
+        if note.containsPoint(location){
+            let touchedNode = nodeAtPoint(location)
+            touchedNode.zPosition = 15
+        }
+    }
+    
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+        let t = touches.first
+        let touchItem = t as! UITouch
+        let location = touchItem.locationInNode(self)
+        
+        if note.containsPoint(location){
+            let touchedNode = nodeAtPoint(location)
+            touchedNode.position = location
+        }
+    }
+    
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        let t = touches.first
+        let touchItem = t as! UITouch
+        let location = touchItem.locationInNode(self)
+        if note.containsPoint(location){
+            let touchedNode = nodeAtPoint(location)
+            touchedNode.zPosition = 1
             
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
+            if abs(note.position.x - refer.position.x)  < abs(note.position.x - refer2.position.x){
+                touchedNode.position = refer.position
+                
+            }
+            else{
+                touchedNode.position = refer2.position
+            }
             
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
+        }
+        
+        
+    }
+    
+    override func touchesCancelled(touches: Set<NSObject>!, withEvent event: UIEvent!) {
+        let t = touches.first
+        let touchItem = t as! UITouch
+        let location = touchItem.locationInNode(self)
+        if note.containsPoint(location){
+            let touchedNode = nodeAtPoint(location)
+            touchedNode.zPosition = 0
             
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
+            if abs(note.position.x - refer.position.x)  < abs(note.position.x - refer2.position.x){
+                touchedNode.position = refer.position
+                
+            }
+            else{
+                touchedNode.position = refer2.position
+            }
             
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
         }
     }
    
