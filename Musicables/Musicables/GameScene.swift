@@ -11,6 +11,7 @@ import SpriteKit
 var refer: SKSpriteNode!
 var refer2: SKSpriteNode!
 var note: SKSpriteNode!
+var cleanButton: SKSpriteNode!
 
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
@@ -31,6 +32,30 @@ class GameScene: SKScene {
         refer2.position = CGPointMake(300, 400)
         refer.zPosition = 0
         addChild(refer2)
+        
+        addCleanButton()
+    }
+    
+    func addCleanButton(){
+        cleanButton = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 200, height: 100))
+        cleanButton.name = "cleanButton"
+        cleanButton.position = CGPointMake(800, 150)
+        cleanButton.zPosition = 1
+        
+        let labelCleanButton = SKLabelNode(fontNamed: "Helvetica")
+        labelCleanButton.fontSize = CGFloat(22.0)
+        labelCleanButton.fontColor = SKColor.whiteColor()
+        labelCleanButton.text = "Limpar"
+        cleanButton.addChild(labelCleanButton)
+        
+        addChild(cleanButton)
+        
+        
+        
+    }
+    
+    func cleanButtonAction(){
+        note.removeFromParent()
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -43,6 +68,11 @@ class GameScene: SKScene {
         if note.containsPoint(location){
             let touchedNode = nodeAtPoint(location)
             touchedNode.zPosition = 15
+        }
+        
+        //Remove note action
+        if cleanButton.containsPoint(location){
+            cleanButtonAction()
         }
     }
     
@@ -65,7 +95,7 @@ class GameScene: SKScene {
             let touchedNode = nodeAtPoint(location)
             touchedNode.zPosition = 1
             
-            if abs(note.position.x - refer.position.x)  < abs(note.position.x - refer2.position.x){
+            if abs(note.position.x - refer.position.x) < abs(note.position.x - refer2.position.x){
                 touchedNode.position = refer.position
                 
             }
@@ -86,7 +116,7 @@ class GameScene: SKScene {
             let touchedNode = nodeAtPoint(location)
             touchedNode.zPosition = 0
             
-            if abs(note.position.x - refer.position.x)  < abs(note.position.x - refer2.position.x){
+            if abs(note.position.x - refer.position.x) < abs(note.position.x - refer2.position.x){
                 touchedNode.position = refer.position
                 
             }
