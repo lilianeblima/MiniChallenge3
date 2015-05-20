@@ -30,23 +30,37 @@ func playNote(filename: String) {
     player.play()
 }
 
-enum Duration {
-    case Semibreve
-    case Minima
-    case Seminima
-    case Colcheia
-}
+let path = NSBundle.mainBundle().pathForResource("notes", ofType: "json")
+let json = NSData(contentsOfFile: path!)
+let noteDictionary = NSJSONSerialization.JSONObjectWithData(json!, options: .MutableContainers, error: nil) as! NSDictionary
 
 class Note: SKSpriteNode {
     
     var tone: String!
+    var duration: String!
+    var nota: String!
     
-    convenience init(duration: Duration) {
+    convenience init(duracao: String) {
         
-        self.init(duration: duration)
+        self.init(duracao: duracao)
         self.tone = String()
+        self.duration = duracao
         
     }
+    
+    func setNote(tone: String) {
+        
+        let notes = noteDictionary.valueForKey(duration) as! NSDictionary
+        nota = notes.valueForKey(tone) as! String
+        playNote(nota)
+        
+    }
+    
+    func play() {
+        playNote(nota)
+    }
+    
+    
 
 
    

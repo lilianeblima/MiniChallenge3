@@ -15,7 +15,6 @@ var cleanButton: SKSpriteNode!
 
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
-<<<<<<< HEAD
         
         self.backgroundColor = SKColor.whiteColor()
         
@@ -33,7 +32,7 @@ class GameScene: SKScene {
             self.addChild(one)
             i = i + 85
             ++j
-=======
+        }
         /* Setup your scene here */
 
         self.backgroundColor = SKColor.whiteColor()
@@ -52,10 +51,14 @@ class GameScene: SKScene {
         refer.zPosition = 0
         addChild(refer2)
         
+        
         addCleanButton()
+            
+            
+            
     }
     
-    func addCleanButton(){
+    func addCleanButton() {
         cleanButton = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 200, height: 100))
         cleanButton.name = "cleanButton"
         cleanButton.position = CGPointMake(800, 150)
@@ -69,15 +72,13 @@ class GameScene: SKScene {
         
         addChild(cleanButton)
         
-        
-        
     }
     
     func cleanButtonAction(){
         note.removeFromParent()
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
         
         let t = touches.first
@@ -92,10 +93,13 @@ class GameScene: SKScene {
         //Remove note action
         if cleanButton.containsPoint(location){
             cleanButtonAction()
+            
         }
-    }
     
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+        
+        }
+    
+     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         let t = touches.first
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
@@ -105,7 +109,7 @@ class GameScene: SKScene {
             touchedNode.position = location
         }
     }
-    
+ 
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         let t = touches.first
         let touchItem = t as! UITouch
@@ -143,7 +147,6 @@ class GameScene: SKScene {
                 touchedNode.position = refer2.position
             }
             
->>>>>>> refs/remotes/origin/master
         }
         
         let node = SKSpriteNode(color: UIColor.blackColor(), size: CGSizeMake(100, 100))
