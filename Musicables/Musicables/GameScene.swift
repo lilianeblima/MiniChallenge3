@@ -24,6 +24,25 @@ var midLineY:CGFloat?
 
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
+<<<<<<< HEAD
+        
+        self.backgroundColor = SKColor.whiteColor()
+        
+        let colors = [SKColor.redColor(), SKColor.blueColor(), SKColor.greenColor(), SKColor.yellowColor(), SKColor.grayColor()]
+        
+        var i: CGFloat = 250
+        var j = 0
+        
+        while (i <= 590 && j < 5) {
+            let one = SKSpriteNode()
+            one.size.width = 3000
+            one.size.height = 5
+            one.color = colors[j]
+            one.position = CGPointMake(0, i)
+            self.addChild(one)
+            i = i + 85
+            ++j
+=======
         /* Setup your scene here */
         midLineY = self.view!.bounds.height/3
         
@@ -80,6 +99,11 @@ class GameScene: SKScene {
         if refer.containsPoint(location){
             let touchedNode = nodeAtPoint(location)
             touchedNode.zPosition = 15
+        }
+        
+        //Remove note action
+        if cleanButton.containsPoint(location){
+            cleanButtonAction()
         }
     }
     
