@@ -1,0 +1,62 @@
+{
+	"semibreve": {
+		"do1": "do1_semibreve.mp3",
+		"re1": "re1_semibreve.mp3",
+		"mi1": "mi1_semibreve.mp3",
+		"fa1": "fa1_semibreve.mp3",
+		"sol1": "sol1_semibreve.mp3",
+		"la1": "la1_semibreve.mp3",
+		"si1": "si1_semibreve.mp3",
+		"do2": "do2_semibreve.mp3",
+		"re2": "re2_semibreve.mp3",
+		"mi2": "mi2_semibreve.mp3",
+		"fa2": "fa2_semibreve.mp3",
+		"sol2": "sol2_semibreve.mp3",
+		"la2": "la2_semibreve.mp3"
+	},
+	"minima": {
+		"do1": "do1_minima.mp3",
+		"re1": "re1_minima.mp3",
+		"mi1": "mi1_minima.mp3",
+		"fa1": "fa1_minima.mp3",
+		"sol1": "sol1_minima.mp3",
+		"la1": "la1_minima.mp3",
+		"si1": "si1_minima.mp3",
+		"do2": "do2_minima.mp3",
+		"re2": "re2_minima.mp3",
+		"mi2": "mi2_minima.mp3",
+		"fa2": "fa2_minima.mp3",
+		"sol2": "sol2_minima.mp3",
+		"la2": "la2_minima.mp3"
+	},
+	"seminima": {
+		"do1": "do1_seminima.mp3",
+		"re1": "re1_seminima.mp3",
+		"mi1": "mi1_seminima.mp3",
+		"fa1": "fa1_seminima.mp3",
+		"sol1": "sol1_seminima.mp3",
+		"la1": "la1_seminima.mp3",
+		"si1": "si1_seminima.mp3",
+		"do2": "do2_seminima.mp3",
+		"re2": "re2_seminima.mp3",
+		"mi2": "mi2_seminima.mp3",
+		"fa2": "fa2_seminima.mp3",
+		"sol2": "sol2_seminima.mp3",
+		"la2": "la2_seminima.mp3"
+	},
+	"colcheia": {
+		"do1": "do1_colcheia.mp3",
+		"re1": "re1_colcheia.mp3",
+		"mi1": "mi1_colcheia.mp3",
+		"fa1": "fa1_colcheia.mp3",
+		"sol1": "sol1_colcheia.mp3",
+		"la1": "la1_colcheia.mp3",
+		"si1": "si1_colcheia.mp3",
+		"do2": "do2_colcheia.mp3",
+		"re2": "re2_colcheia.mp3",
+		"mi2": "mi2_colcheia.mp3",
+		"fa2": "fa2_colcheia.mp3",
+		"sol2": "sol2_colcheia.mp3",
+		"la2": "la2_colcheia.mp3"
+	}
+}

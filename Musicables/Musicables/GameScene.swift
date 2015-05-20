@@ -140,22 +140,12 @@ class GameScene: SKScene {
                 else{
                     positionY = 0
                     println("nao esta na linha")
-                    }
-            }
-            else{
-                touchedNode.position = refer2.position
+                }
             }
             
-        }
-    }
-    
-    override func touchesCancelled(touches: Set<NSObject>!, withEvent event: UIEvent!) {
-        let t = touches.first
-        let touchItem = t as! UITouch
-        let location = touchItem.locationInNode(self)
-        if note.containsPoint(location){
-            let touchedNode = nodeAtPoint(location)
-            touchedNode.zPosition = 1
+            if positionY != 0{
+                refer.position = CGPointMake(200, positionY)
+            }
             
             if abs(note.position.x - refer.position.x) < abs(note.position.x - refer2.position.x){
                 touchedNode.position = refer.position
