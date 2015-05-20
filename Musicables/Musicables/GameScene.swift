@@ -15,6 +15,25 @@ var cleanButton: SKSpriteNode!
 
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
+<<<<<<< HEAD
+        
+        self.backgroundColor = SKColor.whiteColor()
+        
+        let colors = [SKColor.redColor(), SKColor.blueColor(), SKColor.greenColor(), SKColor.yellowColor(), SKColor.grayColor()]
+        
+        var i: CGFloat = 250
+        var j = 0
+        
+        while (i <= 590 && j < 5) {
+            let one = SKSpriteNode()
+            one.size.width = 3000
+            one.size.height = 5
+            one.color = colors[j]
+            one.position = CGPointMake(0, i)
+            self.addChild(one)
+            i = i + 85
+            ++j
+=======
         /* Setup your scene here */
 
         self.backgroundColor = SKColor.whiteColor()
@@ -120,7 +139,14 @@ class GameScene: SKScene {
                 touchedNode.position = refer2.position
             }
         }
+        
+        let node = SKSpriteNode(color: UIColor.blackColor(), size: CGSizeMake(100, 100))
+        node.position = CGPointMake(50, 50)
+        self.addChild(node)
+        
+        
     }
+    
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
