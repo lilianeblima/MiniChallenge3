@@ -42,7 +42,7 @@ class Note: SKSpriteNode {
     
     convenience init(duracao: String) {
         
-        self.init(duracao: duracao)
+        self.init(texture: nil, color: nil, size: CGSizeZero)
         self.tone = String()
         self.duration = duracao
         
@@ -52,7 +52,7 @@ class Note: SKSpriteNode {
         
         let notes = noteDictionary.valueForKey(duration) as! NSDictionary
         nota = notes.valueForKey(tone) as! String
-        playNote(nota)
+        println(nota)
         
     }
     

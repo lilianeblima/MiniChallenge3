@@ -46,11 +46,14 @@ class GameScene: SKScene {
 
         arrayPositionX = [100,200,300,400]
         
+        var i: CGFloat = 250
+        var j = 0
+        
         while (i <= 590 && j < 5) {
             let one = SKSpriteNode()
             one.size.width = 3000
             one.size.height = 5
-            one.color = colors[j]
+            //one.color = colors[j]
             one.position = CGPointMake(0, i)
             self.addChild(one)
             i = i + 85

@@ -23,7 +23,6 @@
 		6164CE521B06105500D6D0B8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6164CE501B06105500D6D0B8 /* LaunchScreen.xib */; };
 		6164CE5E1B06105500D6D0B8 /* MusicablesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6164CE5D1B06105500D6D0B8 /* MusicablesTests.swift */; };
 		E41CB5081B0CB20000A4C66C /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41CB5071B0CB20000A4C66C /* Note.swift */; };
-		E41CB5091B0CD0C500A4C66C /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41CB5071B0CB20000A4C66C /* Note.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -271,7 +270,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6164CE5E1B06105500D6D0B8 /* MusicablesTests.swift in Sources */,
-				E41CB5091B0CD0C500A4C66C /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
