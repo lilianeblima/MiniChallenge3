@@ -15,6 +15,7 @@
 		6164CE4F1B06105500D6D0B8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6164CE4E1B06105500D6D0B8 /* Images.xcassets */; };
 		6164CE521B06105500D6D0B8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6164CE501B06105500D6D0B8 /* LaunchScreen.xib */; };
 		6164CE5E1B06105500D6D0B8 /* MusicablesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6164CE5D1B06105500D6D0B8 /* MusicablesTests.swift */; };
+		E41CB5081B0CB20000A4C66C /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41CB5071B0CB20000A4C66C /* Note.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		6164CE571B06105500D6D0B8 /* MusicablesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicablesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6164CE5C1B06105500D6D0B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6164CE5D1B06105500D6D0B8 /* MusicablesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicablesTests.swift; sourceTree = "<group>"; };
+		E41CB5071B0CB20000A4C66C /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				6164CE4E1B06105500D6D0B8 /* Images.xcassets */,
 				6164CE501B06105500D6D0B8 /* LaunchScreen.xib */,
 				6164CE411B06105500D6D0B8 /* Supporting Files */,
+				E41CB5071B0CB20000A4C66C /* Note.swift */,
 			);
 			path = Musicables;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 				6164CE481B06105500D6D0B8 /* GameScene.swift in Sources */,
 				6164CE4A1B06105500D6D0B8 /* GameViewController.swift in Sources */,
 				6164CE441B06105500D6D0B8 /* AppDelegate.swift in Sources */,
+				E41CB5081B0CB20000A4C66C /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,6 +423,7 @@
 				6164CE631B06105500D6D0B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6164CE641B06105500D6D0B8 /* Build configuration list for PBXNativeTarget "MusicablesTests" */ = {
 			isa = XCConfigurationList;
@@ -427,6 +432,7 @@
 				6164CE661B06105500D6D0B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

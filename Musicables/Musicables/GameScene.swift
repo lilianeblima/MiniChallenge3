@@ -10,34 +10,32 @@ import SpriteKit
 
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 65;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
         
-        self.addChild(myLabel)
+        self.backgroundColor = SKColor.whiteColor()
+        
+        let colors = [SKColor.redColor(), SKColor.blueColor(), SKColor.greenColor(), SKColor.yellowColor(), SKColor.grayColor()]
+        
+        var i: CGFloat = 250
+        var j = 0
+        
+        while (i <= 590 && j < 5) {
+            let one = SKSpriteNode()
+            one.size.width = 3000
+            one.size.height = 5
+            one.color = colors[j]
+            one.position = CGPointMake(0, i)
+            self.addChild(one)
+            i = i + 85
+            ++j
+        }
+        
+        let node = SKSpriteNode(color: UIColor.blackColor(), size: CGSizeMake(100, 100))
+        node.position = CGPointMake(50, 50)
+        self.addChild(node)
+        
+        
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        /* Called when a touch begins */
-        
-        for touch in (touches as! Set<UITouch>) {
-            let location = touch.locationInNode(self)
-            
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-            
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
-        }
-    }
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
