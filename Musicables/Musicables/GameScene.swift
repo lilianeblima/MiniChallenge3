@@ -49,9 +49,7 @@ class GameScene: SKScene {
         cleanButton.addChild(labelCleanButton)
         
         addChild(cleanButton)
-        
-        
-        
+    
     }
     
     func cleanButtonAction(){
@@ -104,8 +102,6 @@ class GameScene: SKScene {
             }
             
         }
-        
-        
     }
     
     override func touchesCancelled(touches: Set<NSObject>!, withEvent event: UIEvent!) {
@@ -114,7 +110,7 @@ class GameScene: SKScene {
         let location = touchItem.locationInNode(self)
         if note.containsPoint(location){
             let touchedNode = nodeAtPoint(location)
-            touchedNode.zPosition = 0
+            touchedNode.zPosition = 1
             
             if abs(note.position.x - refer.position.x) < abs(note.position.x - refer2.position.x){
                 touchedNode.position = refer.position
@@ -123,7 +119,6 @@ class GameScene: SKScene {
             else{
                 touchedNode.position = refer2.position
             }
-            
         }
     }
    
