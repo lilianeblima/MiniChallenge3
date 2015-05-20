@@ -12,16 +12,39 @@ var refer: SKSpriteNode!
 var refer2: SKSpriteNode!
 var note: SKSpriteNode!
 var cleanButton: SKSpriteNode!
+var line: SKSpriteNode!
+var arrayLines = Array<SKSpriteNode>()
+var arrayPositionX = Array<CGFloat>()
+var arrayPositionY = Array<CGFloat>()
+var arrayNotes = Array<SKSpriteNode>()
+var positionY = CGFloat()
+
+var midLineY:CGFloat?
+
+
 
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         
-        self.backgroundColor = SKColor.whiteColor()
+
+        /* Setup your scene here */
+        midLineY = self.view!.bounds.height/3
         
-        let colors = [SKColor.redColor(), SKColor.blueColor(), SKColor.greenColor(), SKColor.yellowColor(), SKColor.grayColor()]
-        
-        var i: CGFloat = 250
-        var j = 0
+        for var i = 0;i < 5; i++ {
+            
+            line = SKSpriteNode()
+            line.position = CGPointMake(0, midLineY! + CGFloat(60*i))
+            line.size.height = 13
+            line.size.width = 1600
+            line.color = UIColor.redColor()
+            line.name = "line" + String(i)
+            arrayLines.append(line)
+            arrayPositionY.append(line.position.y)
+            addChild(line)
+            
+        }
+
+        arrayPositionX = [100,200,300,400]
         
         while (i <= 590 && j < 5) {
             let one = SKSpriteNode()
@@ -38,18 +61,25 @@ class GameScene: SKScene {
         self.backgroundColor = SKColor.whiteColor()
         
         note = SKSpriteNode(imageNamed: "note.png")
-        note.position = CGPointMake(200, 600)
+        note.position = CGPointMake(200, 500)
         addChild(note)
         
+       
         refer = SKSpriteNode(imageNamed: "point.png")
-        refer.position = CGPointMake(200, 400)
+        refer.position = CGPointMake(100, 100)
         refer.zPosition = 0
+        refer.size.height = 50
+        refer.size.width = 50
         addChild(refer)
         
         refer2 = SKSpriteNode(imageNamed: "point2.png")
-        refer2.position = CGPointMake(300, 400)
-        refer.zPosition = 0
+        refer2.position = CGPointMake(200, 100)
+        refer2.zPosition = 0
+        refer2.size.height = 50
+        refer2.size.width = 50
         addChild(refer2)
+
+       // array = [200, 300]
         
         
         addCleanButton()
@@ -80,12 +110,12 @@ class GameScene: SKScene {
     
      override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
-        
+        arrayLines[3].color = UIColor.greenColor()
         let t = touches.first
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
         
-        if note.containsPoint(location){
+        if refer.containsPoint(location){
             let touchedNode = nodeAtPoint(location)
             touchedNode.zPosition = 15
         }
@@ -104,7 +134,7 @@ class GameScene: SKScene {
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
         
-        if note.containsPoint(location){
+        if refer.containsPoint(location){
             let touchedNode = nodeAtPoint(location)
             touchedNode.position = location
         }
@@ -114,30 +144,26 @@ class GameScene: SKScene {
         let t = touches.first
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
-        if note.containsPoint(location){
+        if refer.containsPoint(location){
             let touchedNode = nodeAtPoint(location)
             touchedNode.zPosition = 1
             
-            if abs(note.position.x - refer.position.x) < abs(note.position.x - refer2.position.x){
-                touchedNode.position = refer.position
-                
-            }
-            else{
-                touchedNode.position = refer2.position
+            for var a = 0; a < arrayPositionY.count; a++ {
+                if refer.position.y == arrayPositionY[a] || abs(refer.position.y - arrayPositionY[a]) < 15 {
+                    refer.position.y = arrayPositionY[a]
+                    positionY = arrayPositionY[a]
+                    println(positionY)
+                    break
+                }
+                else{
+                    positionY = 0
+                    println("nao esta na linha")
+                }
             }
             
-        }
-        
-        
-    }
-    
-    override func touchesCancelled(touches: Set<NSObject>!, withEvent event: UIEvent!) {
-        let t = touches.first
-        let touchItem = t as! UITouch
-        let location = touchItem.locationInNode(self)
-        if note.containsPoint(location){
-            let touchedNode = nodeAtPoint(location)
-            touchedNode.zPosition = 0
+            if positionY != 0{
+                refer.position = CGPointMake(200, positionY)
+            }
             
             if abs(note.position.x - refer.position.x) < abs(note.position.x - refer2.position.x){
                 touchedNode.position = refer.position
@@ -148,16 +174,11 @@ class GameScene: SKScene {
             }
             
         }
-        
-        let node = SKSpriteNode(color: UIColor.blackColor(), size: CGSizeMake(100, 100))
-        node.position = CGPointMake(50, 50)
-        self.addChild(node)
-        
-        
     }
-    
+
    
-    override func update(currentTime: CFTimeInterval) {
+     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }
+
 }

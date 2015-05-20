@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E3C68421B0CD35B00E55147 /* notes.json in Resources */ = {isa = PBXBuildFile; fileRef = 5E3C68411B0CD35B00E55147 /* notes.json */; };
 		5E85A4301B0B572B00F0728F /* point.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E85A42C1B0B572B00F0728F /* point.png */; };
 		5E85A4311B0B572B00F0728F /* point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E85A42D1B0B572B00F0728F /* point@2x.png */; };
 		5E85A4321B0B572B00F0728F /* note.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E85A42E1B0B572B00F0728F /* note.png */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5E3C68411B0CD35B00E55147 /* notes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notes.json; sourceTree = "<group>"; };
 		5E85A42C1B0B572B00F0728F /* point.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = point.png; sourceTree = "<group>"; };
 		5E85A42D1B0B572B00F0728F /* point@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "point@2x.png"; sourceTree = "<group>"; };
 		5E85A42E1B0B572B00F0728F /* note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = note.png; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				6164CE451B06105500D6D0B8 /* GameScene.sks */,
 				6164CE471B06105500D6D0B8 /* GameScene.swift */,
 				6164CE491B06105500D6D0B8 /* GameViewController.swift */,
+				5E3C68411B0CD35B00E55147 /* notes.json */,
 				6164CE4B1B06105500D6D0B8 /* Main.storyboard */,
 				6164CE4E1B06105500D6D0B8 /* Images.xcassets */,
 				6164CE501B06105500D6D0B8 /* LaunchScreen.xib */,
@@ -231,6 +234,7 @@
 				6164CE521B06105500D6D0B8 /* LaunchScreen.xib in Resources */,
 				6164CE4F1B06105500D6D0B8 /* Images.xcassets in Resources */,
 				5E85A4371B0B579500F0728F /* point2@2x.png in Resources */,
+				5E3C68421B0CD35B00E55147 /* notes.json in Resources */,
 				5E85A4301B0B572B00F0728F /* point.png in Resources */,
 				5E85A4321B0B572B00F0728F /* note.png in Resources */,
 				5E85A4311B0B572B00F0728F /* point@2x.png in Resources */,
