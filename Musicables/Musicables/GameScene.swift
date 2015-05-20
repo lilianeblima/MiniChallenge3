@@ -11,6 +11,7 @@ import SpriteKit
 var refer: SKSpriteNode!
 var refer2: SKSpriteNode!
 var note: SKSpriteNode!
+var cleanButton: SKSpriteNode!
 var line: SKSpriteNode!
 var arrayLines = Array<SKSpriteNode>()
 var arrayPositionX = Array<CGFloat>()
@@ -24,25 +25,8 @@ var midLineY:CGFloat?
 
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
-<<<<<<< HEAD
         
-        self.backgroundColor = SKColor.whiteColor()
-        
-        let colors = [SKColor.redColor(), SKColor.blueColor(), SKColor.greenColor(), SKColor.yellowColor(), SKColor.grayColor()]
-        
-        var i: CGFloat = 250
-        var j = 0
-        
-        while (i <= 590 && j < 5) {
-            let one = SKSpriteNode()
-            one.size.width = 3000
-            one.size.height = 5
-            one.color = colors[j]
-            one.position = CGPointMake(0, i)
-            self.addChild(one)
-            i = i + 85
-            ++j
-=======
+
         /* Setup your scene here */
         midLineY = self.view!.bounds.height/3
         
@@ -86,7 +70,29 @@ class GameScene: SKScene {
 
        // array = [200, 300]
         
+        addCleanButton()
+    }
+    
+    func addCleanButton(){
+        cleanButton = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 200, height: 100))
+        cleanButton.name = "cleanButton"
+        cleanButton.position = CGPointMake(800, 150)
+        cleanButton.zPosition = 1
         
+        let labelCleanButton = SKLabelNode(fontNamed: "Helvetica")
+        labelCleanButton.fontSize = CGFloat(22.0)
+        labelCleanButton.fontColor = SKColor.whiteColor()
+        labelCleanButton.text = "Limpar"
+        cleanButton.addChild(labelCleanButton)
+        
+        addChild(cleanButton)
+        
+        
+        
+    }
+    
+    func cleanButtonAction(){
+        note.removeFromParent()
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -133,22 +139,22 @@ class GameScene: SKScene {
                     println(positionY)
                     break
                 }
-                    else{
-                        positionY = 0
-                        println("nao esta na linha")
+                else{
+                    positionY = 0
+                    println("nao esta na linha")
                     }
-                
-                
             }
             
             if positionY != 0{
                 refer.position = CGPointMake(200, positionY)
                 }
-            }
+            
+        }
     }
 
    
-    override func update(currentTime: CFTimeInterval) {
+     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }
+
 }
