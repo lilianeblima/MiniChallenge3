@@ -18,17 +18,10 @@ var arrayPositionX = Array<CGFloat>()
 var arrayPositionY = Array<CGFloat>()
 var arrayNotes = Array<SKSpriteNode>()
 var positionY = CGFloat()
-
-//var midLineY:CGFloat?
-
-
+var contArrayNotes = 0
 
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
-        
-
-        /* Setup your scene here */
-        //midLineY = self.view!.bounds.height/3
         
         for var i = 0;i < 13; i++ {
             
@@ -60,51 +53,21 @@ class GameScene: SKScene {
             addChild(line)
             
         }
-
-//        arrayPositionX = [100,200,300,400]
-//        
-//        var i: CGFloat = 250
-//        var j = 0
-//        
-//        while (i <= 590 && j < 5) {
-//            let one = SKSpriteNode()
-//            one.size.width = 3000
-//            one.size.height = 5
-//            //one.color = colors[j]
-//            one.position = CGPointMake(0, i)
-//            self.addChild(one)
-//            i = i + 85
-//            ++j
-//        }
-        /* Setup your scene here */
-
+        
         self.backgroundColor = SKColor.whiteColor()
         
-        note = SKSpriteNode(imageNamed: "point.png")
+        addNotes()
+        
+        addCleanButton()
+            
+    }
+    
+    func addNotes(){
+        note = SKSpriteNode(color: UIColor.purpleColor(), size: CGSize(width: 50, height: 50))
         note.position = CGPointMake(200, 100)
         note.color = UIColor.redColor()
         arrayNotes.append(note)
         addChild(note)
-//        
-//       
-//        refer = SKSpriteNode(imageNamed: "point.png")
-//        refer.position = CGPointMake(100, 100)
-//        refer.zPosition = 0
-//        refer.size.height = 50
-//        refer.size.width = 50
-//        addChild(refer)
-//        
-//        refer2 = SKSpriteNode(imageNamed: "point2.png")
-//        refer2.position = CGPointMake(200, 100)
-//        refer2.zPosition = 0
-//        refer2.size.height = 50
-//        refer2.size.width = 50
-//        addChild(refer2)
-        
-        addCleanButton()
-            
-            
-            
     }
     
     func addCleanButton() {
@@ -124,7 +87,11 @@ class GameScene: SKScene {
     }
     
     func cleanButtonAction(){
-        note.removeFromParent()
+        for(var i = 0; i < arrayNotes.count; i++){
+            arrayNotes[i].removeFromParent()
+        }
+        contArrayNotes=0
+        addNotes()
     }
     
      override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -138,14 +105,12 @@ class GameScene: SKScene {
             touchedNode.zPosition = 15
         }
         
-        //Remove note action
         if cleanButton.containsPoint(location){
             cleanButtonAction()
-            
         }
     
         
-        }
+    }
     
      override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         let t = touches.first
@@ -167,31 +132,39 @@ class GameScene: SKScene {
             touchedNode.zPosition = 1
             
             for var i = 0; i < arrayLines.count; i++ {
-                if note.position.y == arrayLines[i].position.y || abs(note.position.y - arrayLines[i].position.y) < 15 {
+                if (i != 0) && (note.position.y == arrayLines[i].position.y || abs(note.position.y - arrayLines[i].position.y) < 15) {
                     
                     if (abs(note.position.x - arrayLines[i].position.y) < abs(note.position.x - arrayLines[i-1].position.y)){
                 
-                        if(abs(note.position.x - arrayLines[i].position.y) <= abs(note.position.x - arrayLines[i+1].position.y)) {
+                        if((i==0) && abs(note.position.x - arrayLines[i].position.y) <= abs(note.position.x - arrayLines[i+1].position.y)) {
                             touchedNode.position.y = arrayLines[i].position.y
-                            touchedNode.position.x = 300
+                            
                             break
                         }
                         else{
                             touchedNode.position.y = arrayLines[i].position.y
-                            touchedNode.position.x = 300
                             break
                         }
                     }
             
-                    else if(abs(note.position.x - arrayLines[i].position.y) > abs(note.position.x - arrayLines[i-1].position.y)){
+                    else if (abs(note.position.x - arrayLines[i].position.y) > abs(note.position.x - arrayLines[i-1].position.y)){
                         touchedNode.position.y = arrayLines[i].position.y
-                        touchedNode.position.x = 300
                         break
                     }
-                
+                    
+                    
                 }
-                
             }
+            
+            if(contArrayNotes == 0){
+                touchedNode.position.x = 100
+            }
+            else{
+                touchedNode.position.x = arrayNotes[contArrayNotes-1].position.x + 150
+            }
+            contArrayNotes++
+            addNotes()
+            
         }
     }
 
