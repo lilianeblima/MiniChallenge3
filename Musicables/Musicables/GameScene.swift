@@ -8,8 +8,8 @@
 
 import SpriteKit
 
-var refer: SKSpriteNode!
-var refer2: SKSpriteNode!
+//var refer: SKSpriteNode!
+//var refer2: SKSpriteNode!
 var note: SKSpriteNode!
 var cleanButton: SKSpriteNode!
 var line: SKSpriteNode!
@@ -19,7 +19,7 @@ var arrayPositionY = Array<CGFloat>()
 var arrayNotes = Array<SKSpriteNode>()
 var positionY = CGFloat()
 
-var midLineY:CGFloat?
+//var midLineY:CGFloat?
 
 
 
@@ -28,62 +28,78 @@ class GameScene: SKScene {
         
 
         /* Setup your scene here */
-        midLineY = self.view!.bounds.height/3
+        //midLineY = self.view!.bounds.height/3
         
-        for var i = 0;i < 5; i++ {
+        for var i = 0;i < 13; i++ {
             
             line = SKSpriteNode()
-            line.position = CGPointMake(0, midLineY! + CGFloat(60*i))
-            line.size.height = 13
-            line.size.width = 1600
-            line.color = UIColor.redColor()
-            line.name = "line" + String(i)
+            
+            if(i%2==0){
+                //Inserindo linhas
+                line.position = CGPointMake(200, CGFloat(250+25*i))
+                line.size.height = 13
+                line.size.width = 1600
+                line.color = UIColor.blackColor()
+                line.name = "line" + String(i)
+                if(i==0 || i==12){
+                    //Inserindo as linhas do1 e la2
+                    line.color = UIColor.redColor()
+                }
+            }
+            else{
+                //Inserindo espacos
+                line.position = CGPointMake(200, CGFloat(250+25*i))
+                line.size.height = 35
+                line.size.width = 1600
+                line.color = UIColor.lightGrayColor()
+                line.name = "line" + String(i)
+            }
+            
             arrayLines.append(line)
             arrayPositionY.append(line.position.y)
             addChild(line)
             
         }
 
-        arrayPositionX = [100,200,300,400]
-        
-        var i: CGFloat = 250
-        var j = 0
-        
-        while (i <= 590 && j < 5) {
-            let one = SKSpriteNode()
-            one.size.width = 3000
-            one.size.height = 5
-            //one.color = colors[j]
-            one.position = CGPointMake(0, i)
-            self.addChild(one)
-            i = i + 85
-            ++j
-        }
+//        arrayPositionX = [100,200,300,400]
+//        
+//        var i: CGFloat = 250
+//        var j = 0
+//        
+//        while (i <= 590 && j < 5) {
+//            let one = SKSpriteNode()
+//            one.size.width = 3000
+//            one.size.height = 5
+//            //one.color = colors[j]
+//            one.position = CGPointMake(0, i)
+//            self.addChild(one)
+//            i = i + 85
+//            ++j
+//        }
         /* Setup your scene here */
 
         self.backgroundColor = SKColor.whiteColor()
         
-        note = SKSpriteNode(imageNamed: "note.png")
-        note.position = CGPointMake(200, 500)
+        note = SKSpriteNode(imageNamed: "point.png")
+        note.position = CGPointMake(200, 100)
+        note.color = UIColor.redColor()
+        arrayNotes.append(note)
         addChild(note)
-        
-       
-        refer = SKSpriteNode(imageNamed: "point.png")
-        refer.position = CGPointMake(100, 100)
-        refer.zPosition = 0
-        refer.size.height = 50
-        refer.size.width = 50
-        addChild(refer)
-        
-        refer2 = SKSpriteNode(imageNamed: "point2.png")
-        refer2.position = CGPointMake(200, 100)
-        refer2.zPosition = 0
-        refer2.size.height = 50
-        refer2.size.width = 50
-        addChild(refer2)
-
-       // array = [200, 300]
-        
+//        
+//       
+//        refer = SKSpriteNode(imageNamed: "point.png")
+//        refer.position = CGPointMake(100, 100)
+//        refer.zPosition = 0
+//        refer.size.height = 50
+//        refer.size.width = 50
+//        addChild(refer)
+//        
+//        refer2 = SKSpriteNode(imageNamed: "point2.png")
+//        refer2.position = CGPointMake(200, 100)
+//        refer2.zPosition = 0
+//        refer2.size.height = 50
+//        refer2.size.width = 50
+//        addChild(refer2)
         
         addCleanButton()
             
@@ -113,12 +129,11 @@ class GameScene: SKScene {
     
      override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
-        arrayLines[3].color = UIColor.greenColor()
         let t = touches.first
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
         
-        if refer.containsPoint(location){
+        if note.containsPoint(location){
             let touchedNode = nodeAtPoint(location)
             touchedNode.zPosition = 15
         }
@@ -137,7 +152,7 @@ class GameScene: SKScene {
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
         
-        if refer.containsPoint(location){
+        if note.containsPoint(location){
             let touchedNode = nodeAtPoint(location)
             touchedNode.position = location
         }
@@ -147,35 +162,36 @@ class GameScene: SKScene {
         let t = touches.first
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
-        if refer.containsPoint(location){
+        if note.containsPoint(location){
             let touchedNode = nodeAtPoint(location)
             touchedNode.zPosition = 1
             
-            for var a = 0; a < arrayPositionY.count; a++ {
-                if refer.position.y == arrayPositionY[a] || abs(refer.position.y - arrayPositionY[a]) < 15 {
-                    refer.position.y = arrayPositionY[a]
-                    positionY = arrayPositionY[a]
-                    println(positionY)
-                    break
-                }
-                else{
-                    positionY = 0
-                    println("nao esta na linha")
-                }
-            }
+            for var i = 0; i < arrayLines.count; i++ {
+                if note.position.y == arrayLines[i].position.y || abs(note.position.y - arrayLines[i].position.y) < 15 {
+                    
+                    if (abs(note.position.x - arrayLines[i].position.y) < abs(note.position.x - arrayLines[i-1].position.y)){
+                
+                        if(abs(note.position.x - arrayLines[i].position.y) <= abs(note.position.x - arrayLines[i+1].position.y)) {
+                            touchedNode.position.y = arrayLines[i].position.y
+                            touchedNode.position.x = 300
+                            break
+                        }
+                        else{
+                            touchedNode.position.y = arrayLines[i].position.y
+                            touchedNode.position.x = 300
+                            break
+                        }
+                    }
             
-            if positionY != 0{
-                refer.position = CGPointMake(200, positionY)
-            }
-            
-            if abs(note.position.x - refer.position.x) < abs(note.position.x - refer2.position.x){
-                touchedNode.position = refer.position
+                    else if(abs(note.position.x - arrayLines[i].position.y) > abs(note.position.x - arrayLines[i-1].position.y)){
+                        touchedNode.position.y = arrayLines[i].position.y
+                        touchedNode.position.x = 300
+                        break
+                    }
+                
+                }
                 
             }
-            else{
-                touchedNode.position = refer2.position
-            }
-            
         }
     }
 
