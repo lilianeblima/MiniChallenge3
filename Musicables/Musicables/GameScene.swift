@@ -19,6 +19,7 @@ var arrayPositionY = Array<CGFloat>()
 var arrayNotes = Array<SKSpriteNode>()
 var positionY = CGFloat()
 var contArrayNotes = 0
+var NoteOutLine = false
 
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
@@ -132,11 +133,12 @@ class GameScene: SKScene {
             touchedNode.zPosition = 1
             
             for var i = 0; i < arrayLines.count; i++ {
-                if (i != 0) && (note.position.y == arrayLines[i].position.y || abs(note.position.y - arrayLines[i].position.y) < 15) {
-                    
-                    if (abs(note.position.x - arrayLines[i].position.y) < abs(note.position.x - arrayLines[i-1].position.y)){
                 
-                        if((i==0) && abs(note.position.x - arrayLines[i].position.y) <= abs(note.position.x - arrayLines[i+1].position.y)) {
+                if (i != 0) && (note.position.y == arrayLines[i].position.y || abs(note.position.y - arrayLines[i].position.y) < 15) {
+                    NoteOutLine = false
+                    if (abs(note.position.y - arrayLines[i].position.y) < abs(note.position.y - arrayLines[i-1].position.y)){
+                
+                        if((i==0) && abs(note.position.y - arrayLines[i].position.y) <= abs(note.position.y - arrayLines[i+1].position.y)) {
                             touchedNode.position.y = arrayLines[i].position.y
                             
                             break
@@ -147,23 +149,34 @@ class GameScene: SKScene {
                         }
                     }
             
-                    else if (abs(note.position.x - arrayLines[i].position.y) > abs(note.position.x - arrayLines[i-1].position.y)){
+                    else if (abs(note.position.y - arrayLines[i].position.y) > abs(note.position.y - arrayLines[i-1].position.y)){
                         touchedNode.position.y = arrayLines[i].position.y
                         break
                     }
-                    
-                    
                 }
+                
+                NoteOutLine = true
+                
             }
             
-            if(contArrayNotes == 0){
-                touchedNode.position.x = 100
+            
+            if NoteOutLine == true{
+                note.position = CGPointMake(200, 100)
             }
-            else{
-                touchedNode.position.x = arrayNotes[contArrayNotes-1].position.x + 150
+            
+           
+            
+            if NoteOutLine == false{
+            
+                if(contArrayNotes == 0){
+                    touchedNode.position.x = 100
+                }
+                else{
+                    touchedNode.position.x = arrayNotes[contArrayNotes-1].position.x + 150
+                }
+                contArrayNotes++
+                addNotes()
             }
-            contArrayNotes++
-            addNotes()
             
         }
     }
