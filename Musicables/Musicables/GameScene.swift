@@ -8,10 +8,20 @@
 
 import SpriteKit
 
-var refer: SKSpriteNode!
-var refer2: SKSpriteNode!
+//var refer: SKSpriteNode!
+//var refer2: SKSpriteNode!
 var note: SKSpriteNode!
 var cleanButton: SKSpriteNode!
+var line: SKSpriteNode!
+
+var arrayLines = Array<SKNode>()
+
+var arrayPositionX = Array<CGFloat>()
+var arrayPositionY = Array<CGFloat>()
+var arrayNotes = Array<SKSpriteNode>()
+var positionY = CGFloat()
+var contArrayNotes = 0
+var NoteOutLine = false
 
 enum StaveElements {
     case Line
@@ -75,28 +85,46 @@ class GameScene: SKScene {
         UIColor(red: 1.0, green: 0.0, blue: 0.424, alpha: 1.0), // line
     ]
 
+    private var staveElements = Array<SKNode>()
+
     // MARK: - View Creation
 
     override func didMoveToView(view: SKView) {
-
         self.backgroundColor = SKColor.whiteColor()
         
-        note = SKSpriteNode(imageNamed: "note.png")
-        note.position = CGPointMake(200, 600)
-        addChild(note)
-        
-        refer = SKSpriteNode(imageNamed: "point.png")
-        refer.position = CGPointMake(200, 400)
-        refer.zPosition = 0
-        addChild(refer)
-        
-        refer2 = SKSpriteNode(imageNamed: "point2.png")
-        refer2.position = CGPointMake(300, 400)
-        refer.zPosition = 0
-        addChild(refer2)
-        
-        addCleanButton()
+//        for var i = 0;i < 13; i++ {
+//            
+//            line = SKSpriteNode()
+//            
+//            if(i%2==0){
+//                //Inserindo linhas
+//                line.position = CGPointMake(200, CGFloat(250+25*i))
+//                line.size.height = 13
+//                line.size.width = 1600
+//                line.color = UIColor.blackColor()
+//                line.name = "line" + String(i)
+//                if(i==0 || i==12){
+//                    //Inserindo as linhas do1 e la2
+//                    line.color = UIColor.redColor()
+//                }
+//            }
+//            else{
+//                //Inserindo espacos
+//                line.position = CGPointMake(200, CGFloat(250+25*i))
+//                line.size.height = 35
+//                line.size.width = 1600
+//                line.color = UIColor.lightGrayColor()
+//                line.name = "line" + String(i)
+//            }
+//            
+//            arrayLines.append(line)
+//            arrayPositionY.append(line.position.y)
+//            addChild(line)
+//            
+//        }
 
+        addNotes()
+        addCleanButton()
         drawStave()
     }
 
@@ -134,10 +162,19 @@ class GameScene: SKScene {
             }
 
             addChild(shape)
+
         }
     }
     
-    func addCleanButton(){
+    func addNotes(){
+        note = SKSpriteNode(color: UIColor.purpleColor(), size: CGSize(width: 50, height: 50))
+        note.position = CGPointMake(200, 100)
+        note.color = UIColor.redColor()
+        arrayNotes.append(note)
+        addChild(note)
+    }
+    
+    func addCleanButton() {
         cleanButton = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 200, height: 100))
         cleanButton.name = "cleanButton"
         cleanButton.position = CGPointMake(800, 150)
@@ -151,17 +188,18 @@ class GameScene: SKScene {
         
         addChild(cleanButton)
         
-        
-        
     }
     
     func cleanButtonAction(){
-        note.removeFromParent()
+        for(var i = 0; i < arrayNotes.count; i++){
+            arrayNotes[i].removeFromParent()
+        }
+        contArrayNotes=0
+        addNotes()
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         /* Called when a touch begins */
-        
         let t = touches.first
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
@@ -170,14 +208,16 @@ class GameScene: SKScene {
             let touchedNode = nodeAtPoint(location)
             touchedNode.zPosition = 15
         }
+    
         
-        //Remove note action
         if cleanButton.containsPoint(location){
             cleanButtonAction()
         }
+    
+        
     }
     
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         let t = touches.first
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
@@ -187,7 +227,7 @@ class GameScene: SKScene {
             touchedNode.position = location
         }
     }
-    
+ 
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         let t = touches.first
         let touchItem = t as! UITouch
@@ -196,39 +236,43 @@ class GameScene: SKScene {
             let touchedNode = nodeAtPoint(location)
             touchedNode.zPosition = 1
             
-            if abs(note.position.x - refer.position.x) < abs(note.position.x - refer2.position.x){
-                touchedNode.position = refer.position
+            for var i = 0; i < arrayLines.count; i++ {
+                
+                if  (note.position.y == arrayLines[i].position.y || abs(note.position.y - arrayLines[i].position.y) < 15) {
+                    NoteOutLine = false
+                    touchedNode.position.y = arrayLines[i].position.y
+                    break
+                }
+                
+                NoteOutLine = true
                 
             }
-            else{
-                touchedNode.position = refer2.position
+            
+            
+            if NoteOutLine == true{
+                note.position = CGPointMake(200, 100)
+            }
+            
+           
+            
+            if NoteOutLine == false{
+            
+                if(contArrayNotes == 0){
+                    touchedNode.position.x = 100
+                }
+                else{
+                    touchedNode.position.x = arrayNotes[contArrayNotes-1].position.x + 150
+                }
+                contArrayNotes++
+                addNotes()
             }
             
         }
-        
-        
     }
-    
-    override func touchesCancelled(touches: Set<NSObject>!, withEvent event: UIEvent!) {
-        let t = touches.first
-        let touchItem = t as! UITouch
-        let location = touchItem.locationInNode(self)
-        if note.containsPoint(location){
-            let touchedNode = nodeAtPoint(location)
-            touchedNode.zPosition = 0
-            
-            if abs(note.position.x - refer.position.x) < abs(note.position.x - refer2.position.x){
-                touchedNode.position = refer.position
-                
-            }
-            else{
-                touchedNode.position = refer2.position
-            }
-            
-        }
-    }
+
    
-    override func update(currentTime: CFTimeInterval) {
+     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }
+
 }
