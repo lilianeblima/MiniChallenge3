@@ -105,6 +105,7 @@ class GameScene: SKScene {
             let touchedNode = nodeAtPoint(location)
             touchedNode.zPosition = 15
         }
+    
         
         if cleanButton.containsPoint(location){
             cleanButtonAction()
