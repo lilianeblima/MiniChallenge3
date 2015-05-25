@@ -34,8 +34,8 @@ class MusicablesTests: XCTestCase {
     }
     
     func testNota() {
-        let nota = Note(duracao: "semibreve")
-        nota.setNote("do1")
+        //let nota = Note(duracao: "semibreve")
+        //nota.setNote("do1")
     }
     
 }
