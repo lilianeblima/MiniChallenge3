@@ -135,9 +135,16 @@ class GameScene: SKScene {
             
             for var i = 0; i < arrayLines.count; i++ {
                 
-                if (i != 0) && (note.position.y == arrayLines[i].position.y || abs(note.position.y - arrayLines[i].position.y) < 15) {
+                if  (note.position.y == arrayLines[i].position.y || abs(note.position.y - arrayLines[i].position.y) < 15) {
                     NoteOutLine = false
-                    if (abs(note.position.y - arrayLines[i].position.y) < abs(note.position.y - arrayLines[i-1].position.y)){
+                    
+                    if i == 0{
+                        touchedNode.position.y = arrayLines[i].position.y
+                        break
+                        
+                    }
+                    
+                    if i != 0 && (abs(note.position.y - arrayLines[i].position.y) < abs(note.position.y - arrayLines[i-1].position.y)){
                 
                         if((i==0) && abs(note.position.y - arrayLines[i].position.y) <= abs(note.position.y - arrayLines[i+1].position.y)) {
                             touchedNode.position.y = arrayLines[i].position.y
