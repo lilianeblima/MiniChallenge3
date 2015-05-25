@@ -137,30 +137,8 @@ class GameScene: SKScene {
                 
                 if  (note.position.y == arrayLines[i].position.y || abs(note.position.y - arrayLines[i].position.y) < 15) {
                     NoteOutLine = false
-                    
-                    if i == 0{
-                        touchedNode.position.y = arrayLines[i].position.y
-                        break
-                        
-                    }
-                    
-                    if i != 0 && (abs(note.position.y - arrayLines[i].position.y) < abs(note.position.y - arrayLines[i-1].position.y)){
-                
-                        if((i==0) && abs(note.position.y - arrayLines[i].position.y) <= abs(note.position.y - arrayLines[i+1].position.y)) {
-                            touchedNode.position.y = arrayLines[i].position.y
-                            
-                            break
-                        }
-                        else{
-                            touchedNode.position.y = arrayLines[i].position.y
-                            break
-                        }
-                    }
-            
-                    else if (abs(note.position.y - arrayLines[i].position.y) > abs(note.position.y - arrayLines[i-1].position.y)){
-                        touchedNode.position.y = arrayLines[i].position.y
-                        break
-                    }
+                    touchedNode.position.y = arrayLines[i].position.y
+                    break
                 }
                 
                 NoteOutLine = true
