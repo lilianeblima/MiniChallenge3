@@ -8,20 +8,8 @@
 
 import SpriteKit
 
-//var refer: SKSpriteNode!
-//var refer2: SKSpriteNode!
 var note: SKSpriteNode!
 var cleanButton: SKSpriteNode!
-var line: SKSpriteNode!
-
-var arrayLines = Array<SKNode>()
-
-var arrayPositionX = Array<CGFloat>()
-var arrayPositionY = Array<CGFloat>()
-var arrayNotes = Array<SKSpriteNode>()
-var positionY = CGFloat()
-var contArrayNotes = 0
-var NoteOutLine = false
 
 enum StaveElements {
     case Line
@@ -228,7 +216,6 @@ class GameScene: SKScene {
 
             if distanceToThisElement <= lineWidth {
                 pinNoteToElementPosition(touchedNode, YCoordinate: elemYCoordinate)
-                contArrayNotes++
                 notes.append(touchedNode)
                 addNotes()
                 return true
