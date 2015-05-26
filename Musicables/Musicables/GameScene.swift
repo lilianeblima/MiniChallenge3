@@ -31,8 +31,8 @@ enum StaveElements {
 class GameScene: SKScene {
 
     // MARK: - Constants
-
-    // Declare stave constants.
+    // Not all lines and spaces are visible, only those
+    // counted as partial.
     private let partialnumberOfLines = 5
     private let totalNumberOfLines = 7
     private let partialNumberOfSpaces = 4
@@ -44,15 +44,19 @@ class GameScene: SKScene {
     private let topMargin: CGFloat = 256.0
 
     // Arbitrary X-axis offset distance and elements length.
-    private let leftMargin: CGFloat = 100.0
-    private let lineLength: CGFloat = 10000.0
+    private let leftMargin: CGFloat = 0.0
+    private let lineLength: CGFloat = 1024.0
 
     // Declare stave dimension.
     private let lineWidth: CGFloat = 16.0
     private let spaceWidth: CGFloat = 48.0
 
-    // Y-Axis note point coordinates equally distributed.
-    private let YCoordinates = [
+    // Distance between notes.
+    private let spaceFromStart: CGFloat = 256.0
+    private let spaceBetweenNotes: CGFloat = 82.7
+
+    // Y-Axis note point coordinates are evenly distributed.
+    private let YCoordinates: [CGFloat] = [
         192.0,
         224.0,
         256.0,
@@ -70,111 +74,80 @@ class GameScene: SKScene {
 
     // Color schemes.
     private let staveColors = [
-        UIColor(red: 0.694, green: 0.0, blue: 1.0, alpha: 1.0), // line
-        UIColor(red: 0.435, green: 1.0, blue: 0.651, alpha: 1.0), // space
-        UIColor(red: 0.584, green: 0.0, blue: 1.0, alpha: 1.0), // line
-        UIColor(red: 0.033, green: 1.0, blue: 0.671, alpha: 1.0), // space
-        UIColor(red: 0.047, green: 0.706, blue: 1.0, alpha: 1.0), // line
-        UIColor(red: 1.0, green: 0.988, blue: 0.333, alpha: 1.0), // space
-        UIColor(red: 0.027, green: 1.0, blue: 0.0, alpha: 1.0), // line
-        UIColor(red: 1.0, green: 0.659, blue: 0.376, alpha: 1.0), // space
-        UIColor(red: 1.0, green: 0.808, blue: 0.047, alpha: 1.0), // line
-        UIColor(red: 0.333, green: 0.455, blue: 1.0, alpha: 1.0), // space
-        UIColor(red: 1.0, green: 0.2, blue: 0.0, alpha: 1.0), // line
-        UIColor(red: 1.0, green: 0.475, blue: 0.832, alpha: 1.0), // space
-        UIColor(red: 1.0, green: 0.0, blue: 0.424, alpha: 1.0), // line
+        UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0), // line
+        UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0), // space
+        UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0), // line
+        UIColor(red: 1.0, green: 0.376, blue: 0.0, alpha: 1.0), // space
+        UIColor(red: 1.0, green: 0.604, blue: 0.0, alpha: 1.0), // line
+        UIColor(red: 1.0, green: 0.804, blue: 0.0, alpha: 1.0), // space
+        UIColor(red: 0.996, green: 1.0, blue: 0.0, alpha: 1.0), // line
+        UIColor(red: 0.729, green: 0.91, blue: 0.024, alpha: 1.0), // space
+        UIColor(red: 0.18, green: 0.808, blue: 0.047, alpha: 1.0), // line
+        UIColor(red: 0.047, green: 0.6, blue: 0.808, alpha: 1.0), // space
+        UIColor(red: 0.047, green: 0.357, blue: 0.808, alpha: 1.0), // line
+        UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0), // space
+        UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0), // line
     ]
 
-    private var staveElements = Array<SKNode>()
+
+    // MARK: - Global Variables
+    // Added Notes
+    private var notes = [SKNode]()
+
 
     // MARK: - View Creation
 
-    override func didMoveToView(view: SKView) {
-        self.backgroundColor = SKColor.whiteColor()
-        
-//        for var i = 0;i < 13; i++ {
-//            
-//            line = SKSpriteNode()
-//            
-//            if(i%2==0){
-//                //Inserindo linhas
-//                line.position = CGPointMake(200, CGFloat(250+25*i))
-//                line.size.height = 13
-//                line.size.width = 1600
-//                line.color = UIColor.blackColor()
-//                line.name = "line" + String(i)
-//                if(i==0 || i==12){
-//                    //Inserindo as linhas do1 e la2
-//                    line.color = UIColor.redColor()
-//                }
-//            }
-//            else{
-//                //Inserindo espacos
-//                line.position = CGPointMake(200, CGFloat(250+25*i))
-//                line.size.height = 35
-//                line.size.width = 1600
-//                line.color = UIColor.lightGrayColor()
-//                line.name = "line" + String(i)
-//            }
-//            
-//            arrayLines.append(line)
-//            arrayPositionY.append(line.position.y)
-//            addChild(line)
-//            
-//        }
+    private func drawShape(#YCoordinate: CGFloat, shape: StaveElements, color: UIColor) -> SKShapeNode {
+        var startPoint = CGPointMake(leftMargin, YCoordinate)
+        var endPoint = CGPointMake(lineLength, YCoordinate)
+        var points = [startPoint, endPoint]
+        var shapeNode = SKShapeNode(points: &points, count: points.count)
 
+        if shape == StaveElements.Line {
+            shapeNode.lineWidth = lineWidth
+            shapeNode.strokeColor = color
+        } else {
+            shapeNode.lineWidth = spaceWidth
+            shapeNode.strokeColor = color
+        }
+
+        return shapeNode
+    }
+
+    private func drawStave() {
+        let staveSize = totalNumberOfLines + totalNumberOfSpaces
+        var shape: SKShapeNode
+        var YCoordinate: CGFloat
+        var color: UIColor
+
+        for var index = 0; index < staveSize; index++ {
+            YCoordinate = YCoordinates[index]
+            color = staveColors[index]
+
+            if (index % 2) == 0 {
+                shape = drawShape(YCoordinate: YCoordinate, shape: StaveElements.Line, color: color)
+            } else {
+                shape = drawShape(YCoordinate: YCoordinate, shape: StaveElements.Space, color: color)
+            }
+
+            addChild(shape)
+        }
+    }
+
+    override func didMoveToView(view: SKView) {
+        self.backgroundColor = SKColor.clearColor()
         addNotes()
         addCleanButton()
         drawStave()
     }
 
-    private func drawContinuousLine(#YCoordinate: CGFloat, shape: StaveElements, color: UIColor) -> SKShapeNode {
-        var startPoint = CGPointMake(leftMargin, YCoordinate)
-        var endPoint = CGPointMake(lineLength, YCoordinate)
-        var points = [startPoint, endPoint]
-        var line = SKShapeNode(points: &points, count: points.count)
-
-        if shape == StaveElements.Line {
-            line.lineWidth = lineWidth
-            line.lineCap = kCGLineCapRound
-            line.glowWidth = 1.0
-            line.strokeColor = color
-        } else {
-            line.lineWidth = spaceWidth
-            line.lineCap = kCGLineCapButt
-            line.glowWidth = 0
-            line.strokeColor = color
-        }
-
-        return line
-    }
-
-    private func drawStave() {
-        for index in 2...10 {
-            var shape: SKShapeNode
-            var YCoordinate = CGFloat(YCoordinates[index])
-            var color = staveColors[index]
-
-            if (index % 2) == 0 {
-                shape = drawContinuousLine(YCoordinate: YCoordinate, shape: StaveElements.Line, color: color)
-            } else {
-                shape = drawContinuousLine(YCoordinate: YCoordinate, shape: StaveElements.Space, color: color)
-            }
-
-            addChild(shape)
-
-        }
-    }
-    
-    func addNotes(){
-        note = SKSpriteNode(color: UIColor.purpleColor(), size: CGSize(width: 50, height: 50))
+    private func addNotes(){
+        note = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 50, height: 50))
         note.position = CGPointMake(200, 100)
-        note.color = UIColor.redColor()
-        arrayNotes.append(note)
         addChild(note)
     }
-    
-    func addCleanButton() {
+
+    private func addCleanButton() {
         cleanButton = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 200, height: 100))
         cleanButton.name = "cleanButton"
         cleanButton.position = CGPointMake(800, 150)
@@ -185,94 +158,103 @@ class GameScene: SKScene {
         labelCleanButton.fontColor = SKColor.whiteColor()
         labelCleanButton.text = "Limpar"
         cleanButton.addChild(labelCleanButton)
-        
+
         addChild(cleanButton)
-        
+
     }
-    
+
     func cleanButtonAction(){
-        for(var i = 0; i < arrayNotes.count; i++){
-            arrayNotes[i].removeFromParent()
+        for(var i = 0; i < notes.count; i++){
+            notes[i].removeFromParent()
         }
-        contArrayNotes=0
+
+        notes.removeAll(keepCapacity: false)
         addNotes()
     }
+
+    // MARK: - Touch Events
     
-     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        /* Called when a touch begins */
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         let t = touches.first
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
-        
+
         if note.containsPoint(location){
             let touchedNode = nodeAtPoint(location)
             touchedNode.zPosition = 15
         }
-    
         
         if cleanButton.containsPoint(location){
             cleanButtonAction()
         }
-    
-        
     }
-    
-     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+
+    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         let t = touches.first
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
-        
+
         if note.containsPoint(location){
             let touchedNode = nodeAtPoint(location)
             touchedNode.position = location
         }
     }
- 
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let t = touches.first
-        let touchItem = t as! UITouch
-        let location = touchItem.locationInNode(self)
-        if note.containsPoint(location){
-            let touchedNode = nodeAtPoint(location)
-            touchedNode.zPosition = 1
-            
-            for var i = 0; i < arrayLines.count; i++ {
-                
-                if  (note.position.y == arrayLines[i].position.y || abs(note.position.y - arrayLines[i].position.y) < 15) {
-                    NoteOutLine = false
-                    touchedNode.position.y = arrayLines[i].position.y
-                    break
-                }
-                
-                NoteOutLine = true
-                
-            }
-            
-            
-            if NoteOutLine == true{
-                note.position = CGPointMake(200, 100)
-            }
-            
-           
-            
-            if NoteOutLine == false{
-            
-                if(contArrayNotes == 0){
-                    touchedNode.position.x = 100
-                }
-                else{
-                    touchedNode.position.x = arrayNotes[contArrayNotes-1].position.x + 150
-                }
-                contArrayNotes++
-                addNotes()
-            }
-            
+
+    // MARK: Pinning Notes
+
+    private func pinNoteToElementPosition(touchedNode: SKNode, YCoordinate: CGFloat) {
+        touchedNode.zPosition = 1.0
+        touchedNode.position.y = YCoordinate
+
+        if let lastNode = notes.last {
+            // Add a space from the last added note's X coordinate.
+            touchedNode.position.x = (lastNode.position.x + spaceBetweenNotes)
+        } else {
+            touchedNode.position.x = spaceFromStart
         }
     }
 
-   
-     override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
+    private func isNodeAboveElement(touchedNode: SKNode) -> Bool {
+        let noteYCoordinate: CGFloat = note.position.y // Note Position
+        var elemYCoordinate: CGFloat // Line or Space Position
+        var distanceToThisElement: CGFloat // Distance to this line or space.
+        var isNoteAboveElement = false
+
+        // For each line and space:
+        // Check if the touched node is above it.
+        for var index = 0; index < YCoordinates.count; index++ {
+            elemYCoordinate = YCoordinates[index]
+            distanceToThisElement = abs(noteYCoordinate - elemYCoordinate)
+
+            if distanceToThisElement <= lineWidth {
+                pinNoteToElementPosition(touchedNode, YCoordinate: elemYCoordinate)
+                contArrayNotes++
+                notes.append(touchedNode)
+                addNotes()
+                return true
+            }
+        }
+
+        return false
     }
+
+    private func returnToOriginPosition(node: SKNode) {
+        node.position = CGPointMake(200, 100)
+    }
+ 
+    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
+        let touchItem = touches.first as! UITouch
+        let touchLocation = touchItem.locationInNode(self)
+
+        if note.containsPoint(touchLocation) {
+            let touchedNode = nodeAtPoint(touchLocation)
+
+            if !isNodeAboveElement(touchedNode) {
+                returnToOriginPosition(touchedNode)
+            }
+        }
+
+    }
+
 
 }
