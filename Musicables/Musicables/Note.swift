@@ -25,7 +25,7 @@ func playNote(filename: String) {
         return
     }
     
-    player.numberOfLoops = 1
+    player.numberOfLoops = 0
     player.prepareToPlay()
     player.play()
 }
@@ -42,17 +42,18 @@ class Note: SKSpriteNode {
     
     convenience init(duracao: String) {
         
-        self.init(texture: nil, color: nil, size: CGSizeZero)
+        self.init(imageNamed: duracao)
+        self.setScale(0.4)
         self.tone = String()
         self.duration = duracao
         
     }
-    
     func setNote(tone: String) {
         
         let notes = noteDictionary.valueForKey(duration) as! NSDictionary
         nota = notes.valueForKey(tone) as! String
         println(nota)
+        play()
         
     }
     
@@ -61,7 +62,7 @@ class Note: SKSpriteNode {
     }
     
     
-
-
-   
+    
+    
+    
 }

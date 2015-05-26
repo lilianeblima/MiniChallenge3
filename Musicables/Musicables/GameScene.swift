@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-var note: SKSpriteNode!
+var note: Note!
 var cleanButton: SKSpriteNode!
 
 enum StaveElements {
@@ -80,7 +80,7 @@ class GameScene: SKScene {
 
     // MARK: - Global Variables
     // Added Notes
-    private var notes = [SKNode]()
+    private var notes = [Note]()
 
 
     // MARK: - View Creation
@@ -130,7 +130,7 @@ class GameScene: SKScene {
     }
 
     private func addNotes(){
-        note = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 50, height: 50))
+        note = Note(duracao: "semibreve")
         note.position = CGPointMake(200, 100)
         addChild(note)
     }
@@ -190,7 +190,7 @@ class GameScene: SKScene {
 
     // MARK: Pinning Notes
 
-    private func pinNoteToElementPosition(touchedNode: SKNode, YCoordinate: CGFloat) {
+    private func pinNoteToElementPosition(touchedNode: Note, YCoordinate: CGFloat) {
         touchedNode.zPosition = 1.0
         touchedNode.position.y = YCoordinate
 
@@ -202,7 +202,7 @@ class GameScene: SKScene {
         }
     }
 
-    private func isNodeAboveElement(touchedNode: SKNode) -> Bool {
+    private func isNodeAboveElement(touchedNode: Note) -> Bool {
         let noteYCoordinate: CGFloat = note.position.y // Note Position
         var elemYCoordinate: CGFloat // Line or Space Position
         var distanceToThisElement: CGFloat // Distance to this line or space.
@@ -217,6 +217,7 @@ class GameScene: SKScene {
             if distanceToThisElement <= lineWidth {
                 pinNoteToElementPosition(touchedNode, YCoordinate: elemYCoordinate)
                 notes.append(touchedNode)
+                callSetNote(index, note: touchedNode)
                 addNotes()
                 return true
             }
@@ -225,7 +226,7 @@ class GameScene: SKScene {
         return false
     }
 
-    private func returnToOriginPosition(node: SKNode) {
+    private func returnToOriginPosition(node: Note) {
         node.position = CGPointMake(200, 100)
     }
  
@@ -234,13 +235,47 @@ class GameScene: SKScene {
         let touchLocation = touchItem.locationInNode(self)
 
         if note.containsPoint(touchLocation) {
-            let touchedNode = nodeAtPoint(touchLocation)
+            let touchedNode = nodeAtPoint(touchLocation) as! Note
+
 
             if !isNodeAboveElement(touchedNode) {
                 returnToOriginPosition(touchedNode)
             }
         }
 
+    }
+    
+    private func callSetNote(tone: Int, note: Note){
+        switch(tone){
+            case 0:
+                note.setNote("do1")
+            case 1:
+                note.setNote("re1")
+            case 2:
+                note.setNote("mi1")
+            case 3:
+                note.setNote("fa1")
+            case 4:
+                note.setNote("sol1")
+            case 5:
+                note.setNote("la1")
+            case 6:
+                note.setNote("si1")
+            case 7:
+                note.setNote("do2")
+            case 8:
+                note.setNote("re2")
+            case 9:
+                note.setNote("mi2")
+            case 10:
+                note.setNote("fa2")
+            case 11:
+                note.setNote("sol2")
+            case 12:
+                note.setNote("la2")
+            default:
+                note.setNote("do1")
+        }
     }
 
 
