@@ -126,7 +126,7 @@ class GameScene: SKScene {
 
     override func didMoveToView(view: SKView) {
         self.backgroundColor = SKColor.clearColor()
-        addNotes()
+        //addNotes()
         addCleanButton()
         drawStave()
         addFirstNotes()
@@ -135,22 +135,25 @@ class GameScene: SKScene {
     
     private func addNotes(){
         note = Note(duracao: "semibreve")
-        note.position = CGPointMake(200, 100)
+        note.position = CGPointMake(300, 100)
         note.name = "Note" + String(cont)
-        cont++
+        note.zPosition = 15
         addChild(note)
     }
     
-    private func addFirstNotes(){
+    private func addFirstNotes() {
         
         var FirstSemibreve: SKNode!
         var FirstMinima: SKNode!
         
         FirstSemibreve = SKSpriteNode(color: UIColor.purpleColor(), size: CGSize(width: 50, height: 50))
         FirstSemibreve.position = CGPointMake(300, 100)
+        FirstSemibreve.name = "Semibreve"
+        FirstSemibreve.zPosition = 0
         
         FirstMinima = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 50, height: 50))
         FirstMinima.position = CGPointMake(400, 100)
+        FirstMinima.name = "Minima"
         
         addChild(FirstSemibreve)
         addChild(FirstMinima)
@@ -172,13 +175,14 @@ class GameScene: SKScene {
 
     }
 
-    func cleanButtonAction(){
-        for(var i = 0; i < notes.count; i++){
+    func cleanButtonAction() {
+        if notes.count > 0 {
+        for(var i = 0; i < notes.count; i++) {
             notes[i].removeFromParent()
         }
 
-        notes.removeAll(keepCapacity: false)
-        addNotes()
+         notes.removeAll(keepCapacity: false)
+        }
     }
 
     // MARK: - Touch Events
@@ -189,13 +193,13 @@ class GameScene: SKScene {
         let location = touchItem.locationInNode(self)
         let touchedNode = nodeAtPoint(location)
         
-        if touchedNode.name == "Note" + String(cont-1)
-        {
+        if touchedNode.name == "Semibreve" {
             touchedNode.position = location
-            touchedNode.zPosition = 15
+            touchedNode.zPosition = 0
+            addNotes()
+            
         }
-        
-        if cleanButton.containsPoint(location){
+        else if cleanButton.containsPoint(location) {
             cleanButtonAction()
         }
     }
@@ -207,9 +211,9 @@ class GameScene: SKScene {
         let location = touchItem.locationInNode(self)
         let touchedNode = nodeAtPoint(location)
         
-        if touchedNode.name == "Note" + String(cont-1)
-        {
+        if touchedNode.name == "Note" + String(cont) {
             touchedNode.position = location
+            touchedNode.zPosition = 15
         }
     }
 
@@ -244,7 +248,7 @@ class GameScene: SKScene {
                 notes.append(touchedNode)
                 touchedNode.physicsBody?.dynamic = true
                 callSetNote(index, note: touchedNode)
-                addNotes()
+                //addNotes()
                 return true
             }
         }
@@ -253,7 +257,7 @@ class GameScene: SKScene {
     }
 
     private func returnToOriginPosition(node: Note) {
-        node.position = CGPointMake(200, 100)
+        node.removeFromParent()
     }
  
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -261,6 +265,7 @@ class GameScene: SKScene {
         let touchLocation = touchItem.locationInNode(self)
         
         if note.containsPoint(touchLocation) {
+            cont++
             zPosition = 0
             let touchedNode = nodeAtPoint(touchLocation) as! Note
 
