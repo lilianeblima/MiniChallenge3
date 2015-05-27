@@ -10,13 +10,13 @@ import SpriteKit
 
 var note: Note!
 var cleanButton: SKSpriteNode!
-var FirstSemibreve: SKSpriteNode!
-var FirstMinima: SKSpriteNode!
+
 
 enum StaveElements {
     case Line
     case Space
 }
+
 
 class GameScene: SKScene {
 
@@ -128,16 +128,16 @@ class GameScene: SKScene {
 
     override func didMoveToView(view: SKView) {
         self.backgroundColor = SKColor.clearColor()
-        //addNotes()
         addCleanButton()
         drawStave()
         addFirstNotes()
     }
 
     
-    private func addNotes(){
-        note = Note(duracao: "semibreve")
-        note.position = CGPointMake(300, 100)
+    private func addNotes(noteDurations: SKNode){
+    
+        note = Note(duracao: noteDurations.name!)
+        note.position = CGPointMake(noteDurations.position.x, 100)
         note.name = "Note" + String(cont)
         note.zPosition = 15
         addChild(note)
@@ -145,19 +145,32 @@ class GameScene: SKScene {
     
     private func addFirstNotes() {
         
+        var firstSemibreve: SKSpriteNode!
+        var firstMinima: SKSpriteNode!
+        var firstSeminima: SKSpriteNode!
+        var firstColcheia: SKSpriteNode!
         
+        firstSemibreve = SKSpriteNode(color: UIColor.purpleColor(), size: CGSize(width: 50, height: 50))
+        firstSemibreve.position = CGPointMake(100, 100)
+        firstSemibreve.name = "semibreve"
+        firstSemibreve.zPosition = 0
         
-        FirstSemibreve = SKSpriteNode(color: UIColor.purpleColor(), size: CGSize(width: 50, height: 50))
-        FirstSemibreve.position = CGPointMake(300, 100)
-        FirstSemibreve.name = "Semibreve"
-        FirstSemibreve.zPosition = 0
+        firstMinima = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 50, height: 50))
+        firstMinima.position = CGPointMake(200, 100)
+        firstMinima.name = "minima"
         
-        FirstMinima = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 50, height: 50))
-        FirstMinima.position = CGPointMake(400, 100)
-        FirstMinima.name = "Minima"
+        firstSeminima = SKSpriteNode(color: UIColor.whiteColor(), size: CGSize(width: 50, height: 50))
+        firstSeminima.position = CGPointMake(300, 100)
+        firstSeminima.name = "seminima"
         
-        addChild(FirstSemibreve)
-        addChild(FirstMinima)
+        firstColcheia = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 50, height: 50))
+        firstColcheia.position = CGPointMake(400, 100)
+        firstColcheia.name = "colcheia"
+        
+        addChild(firstSemibreve)
+        addChild(firstMinima)
+        addChild(firstSeminima)
+        addChild(firstColcheia)
     }
 
     private func addCleanButton() {
@@ -194,9 +207,9 @@ class GameScene: SKScene {
         let location = touchItem.locationInNode(self)
         let touchedNode = nodeAtPoint(location)
         
-        if touchedNode.name == "Semibreve" {
+        if touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia"  {
             touchedNode.zPosition = 0
-            addNotes()
+            addNotes(touchedNode)
         }
         else if cleanButton.containsPoint(location) {
             cleanButtonAction()
