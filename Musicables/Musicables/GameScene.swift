@@ -129,6 +129,7 @@ class GameScene: SKScene {
         addNotes()
         addCleanButton()
         drawStave()
+        addFirstNotes()
     }
 
     
@@ -138,6 +139,21 @@ class GameScene: SKScene {
         note.name = "Note" + String(cont)
         cont++
         addChild(note)
+    }
+    
+    private func addFirstNotes(){
+        
+        var FirstSemibreve: SKNode!
+        var FirstMinima: SKNode!
+        
+        FirstSemibreve = SKSpriteNode(color: UIColor.purpleColor(), size: CGSize(width: 50, height: 50))
+        FirstSemibreve.position = CGPointMake(300, 100)
+        
+        FirstMinima = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 50, height: 50))
+        FirstMinima.position = CGPointMake(400, 100)
+        
+        addChild(FirstSemibreve)
+        addChild(FirstMinima)
     }
 
     private func addCleanButton() {
@@ -176,6 +192,7 @@ class GameScene: SKScene {
         if touchedNode.name == "Note" + String(cont-1)
         {
             touchedNode.position = location
+            touchedNode.zPosition = 15
         }
         
         if cleanButton.containsPoint(location){
@@ -225,6 +242,7 @@ class GameScene: SKScene {
             if distanceToThisElement <= lineWidth {
                 pinNoteToElementPosition(touchedNode, YCoordinate: elemYCoordinate)
                 notes.append(touchedNode)
+                touchedNode.physicsBody?.dynamic = true
                 callSetNote(index, note: touchedNode)
                 addNotes()
                 return true
@@ -243,6 +261,7 @@ class GameScene: SKScene {
         let touchLocation = touchItem.locationInNode(self)
         
         if note.containsPoint(touchLocation) {
+            zPosition = 0
             let touchedNode = nodeAtPoint(touchLocation) as! Note
 
             if !isNodeAboveElement(touchedNode) {
