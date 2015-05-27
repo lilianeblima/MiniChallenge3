@@ -81,13 +81,38 @@ class GameScene: SKScene {
 
 
     // MARK: - Global Variables
-    // Added Notes
-    private var notes = [Note]()
-    //Cont Name Note
-    var cont = 0
+
+    private var notes = [Note]() // added notes
+    private var cont = 0 // cont name note
+
+    // Action Buttons
+    private let actionButtonsXCoordinate = 96.0
+
+    private let actionButtonsYCoordinates = [
+        00.0,
+        30.0,
+        60.0,
+        90.0,
+    ]
+
+    private let actionButtonsNames = [
+        "backButton",
+        "playButton",
+        "saveButton",
+        "clearButton"
+    ]
 
 
     // MARK: - View Creation
+
+    private func addButtons() {
+        var button: SKSpriteNode
+
+        for buttonName in actionButtonsNames {
+            button = SKSpriteNode(imageNamed: buttonName)
+            button.position = CGPointMake(actionButtonsXCoordinate, actionButtonsYCoordinates[])
+        }
+    }
 
     private func drawShape(#YCoordinate: CGFloat, shape: StaveElements, color: UIColor) -> SKShapeNode {
         var startPoint = CGPointMake(leftMargin, YCoordinate)
@@ -128,9 +153,9 @@ class GameScene: SKScene {
 
     override func didMoveToView(view: SKView) {
         self.backgroundColor = SKColor.clearColor()
-        //addNotes()
         addCleanButton()
         drawStave()
+        addButtons()
         addFirstNotes()
     }
 
@@ -144,9 +169,6 @@ class GameScene: SKScene {
     }
     
     private func addFirstNotes() {
-        
-        
-        
         FirstSemibreve = SKSpriteNode(color: UIColor.purpleColor(), size: CGSize(width: 50, height: 50))
         FirstSemibreve.position = CGPointMake(300, 100)
         FirstSemibreve.name = "Semibreve"
@@ -243,6 +265,7 @@ class GameScene: SKScene {
             distanceToThisElement = abs(noteYCoordinate - elemYCoordinate)
 
             if distanceToThisElement <= lineWidth {
+//                animateElement()
                 pinNoteToElementPosition(touchedNode, YCoordinate: elemYCoordinate)
                 notes.append(touchedNode)
                 touchedNode.physicsBody?.dynamic = true
@@ -306,6 +329,12 @@ class GameScene: SKScene {
             default:
                 note.setNote("do1")
         }
+    }
+
+    // MARK: - Animation
+
+    private func animateElement() {
+
     }
 
 
