@@ -81,6 +81,8 @@ class GameScene: SKScene {
     // MARK: - Global Variables
     // Added Notes
     private var notes = [Note]()
+    //Cont Name Note
+    var cont = 0
 
 
     // MARK: - View Creation
@@ -129,9 +131,12 @@ class GameScene: SKScene {
         drawStave()
     }
 
+    
     private func addNotes(){
         note = Note(duracao: "semibreve")
         note.position = CGPointMake(200, 100)
+        note.name = "Note" + String(cont)
+        cont++
         addChild(note)
     }
 
@@ -166,24 +171,27 @@ class GameScene: SKScene {
         let t = touches.first
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
-
-        if note.containsPoint(location){
-            let touchedNode = nodeAtPoint(location)
-            touchedNode.zPosition = 15
+        let touchedNode = nodeAtPoint(location)
+        
+        if touchedNode.name == "Note" + String(cont-1)
+        {
+            touchedNode.position = location
         }
         
         if cleanButton.containsPoint(location){
             cleanButtonAction()
         }
     }
+    
 
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         let t = touches.first
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
-
-        if note.containsPoint(location){
-            let touchedNode = nodeAtPoint(location)
+        let touchedNode = nodeAtPoint(location)
+        
+        if touchedNode.name == "Note" + String(cont-1)
+        {
             touchedNode.position = location
         }
     }
@@ -233,10 +241,9 @@ class GameScene: SKScene {
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         let touchItem = touches.first as! UITouch
         let touchLocation = touchItem.locationInNode(self)
-
+        
         if note.containsPoint(touchLocation) {
             let touchedNode = nodeAtPoint(touchLocation) as! Note
-
 
             if !isNodeAboveElement(touchedNode) {
                 returnToOriginPosition(touchedNode)
