@@ -10,6 +10,8 @@ import SpriteKit
 
 var note: Note!
 var cleanButton: SKSpriteNode!
+var FirstSemibreve: SKSpriteNode!
+var FirstMinima: SKSpriteNode!
 
 enum StaveElements {
     case Line
@@ -143,8 +145,7 @@ class GameScene: SKScene {
     
     private func addFirstNotes() {
         
-        var FirstSemibreve: SKNode!
-        var FirstMinima: SKNode!
+        
         
         FirstSemibreve = SKSpriteNode(color: UIColor.purpleColor(), size: CGSize(width: 50, height: 50))
         FirstSemibreve.position = CGPointMake(300, 100)
@@ -194,10 +195,8 @@ class GameScene: SKScene {
         let touchedNode = nodeAtPoint(location)
         
         if touchedNode.name == "Semibreve" {
-            touchedNode.position = location
             touchedNode.zPosition = 0
             addNotes()
-            
         }
         else if cleanButton.containsPoint(location) {
             cleanButtonAction()
