@@ -261,19 +261,12 @@ class GameScene: SKScene {
             touchedNode.zPosition = 15
         }
     }
-
-    func passarArray(){
-        for var x = 0; x<notes.count; x++ {
-                println(notes[x])
-        }
-    }
     
     // MARK: Pinning Notes
 
     private func pinNoteToElementPosition(touchedNode: Note, YCoordinate: CGFloat) {
         touchedNode.zPosition = 1.0
         touchedNode.position.y = YCoordinate
-        passarArray()   
 
         if let lastNode = notes.last {
             // Add a space from the last added note's X coordinate.
