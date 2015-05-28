@@ -10,6 +10,7 @@ import SpriteKit
 
 var note: Note!
 var cleanButton: SKSpriteNode!
+var playButton: SKSpriteNode!
 
 enum StaveElements {
     case Line
@@ -126,6 +127,7 @@ class GameScene: SKScene {
         self.backgroundColor = SKColor.clearColor()
         addNotes()
         addCleanButton()
+        addPlayButton()
         drawStave()
     }
 
@@ -150,14 +152,41 @@ class GameScene: SKScene {
         addChild(cleanButton)
 
     }
+    
+    func addPlayButton(){
+        playButton = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 150, height: 100))
+        playButton.name = "playButton"
+        playButton.position = CGPointMake(600, 150)
+        playButton.zPosition = 1
+        
+        addChild(playButton)
+        
+        let labelPlayButton = SKLabelNode(fontNamed: "Helvetica")
+        labelPlayButton.fontSize = CGFloat(22.0)
+        labelPlayButton.fontColor = SKColor.whiteColor()
+        labelPlayButton.text = "Play"
+        playButton.addChild(labelPlayButton)
+        
+    }
+    
 
-    func cleanButtonAction(){
-        for(var i = 0; i < notes.count; i++){
+    func cleanButtonAction() {
+        for(var i = 0; i < notes.count; i++) {
             notes[i].removeFromParent()
         }
 
         notes.removeAll(keepCapacity: false)
         addNotes()
+    }
+    
+    func playButtonAction() {
+        if(notes.isEmpty) {
+            println("Sem notas ainda")
+        }
+        else{
+    
+        }
+        
     }
 
     // MARK: - Touch Events
@@ -170,6 +199,10 @@ class GameScene: SKScene {
         if note.containsPoint(location){
             let touchedNode = nodeAtPoint(location)
             touchedNode.zPosition = 15
+        }
+        
+        if playButton.containsPoint(location){
+            playButtonAction()
         }
         
         if cleanButton.containsPoint(location){
@@ -217,6 +250,7 @@ class GameScene: SKScene {
             if distanceToThisElement <= lineWidth {
                 pinNoteToElementPosition(touchedNode, YCoordinate: elemYCoordinate)
                 notes.append(touchedNode)
+                happiness(touchedNode.position)
                 callSetNote(index, note: touchedNode)
                 addNotes()
                 return true
@@ -237,10 +271,14 @@ class GameScene: SKScene {
         if note.containsPoint(touchLocation) {
             let touchedNode = nodeAtPoint(touchLocation) as! Note
 
-
+            
             if !isNodeAboveElement(touchedNode) {
                 returnToOriginPosition(touchedNode)
+                
             }
+            
+            
+            
         }
 
     }
@@ -276,6 +314,27 @@ class GameScene: SKScene {
             default:
                 note.setNote("do1")
         }
+    }
+    
+    private func happiness(pos: CGPoint){
+        var emitterNode = SKEmitterNode(fileNamed: "Particle.sks")
+        emitterNode.particlePosition = pos
+        self.addChild(emitterNode)
+
+        
+        // remove particles after 0.6 seconds
+        self.runAction(SKAction.waitForDuration(1), completion: {
+            emitterNode.particleAlpha = 1
+            self.runAction(SKAction.waitForDuration(1), completion: {
+                emitterNode.particleAlpha = 0
+                emitterNode.removeFromParent()
+            })
+
+        })
+    }
+    
+    override func update(currentTime: NSTimeInterval) {
+        
     }
 
 

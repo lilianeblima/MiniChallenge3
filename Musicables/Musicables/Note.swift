@@ -10,6 +10,8 @@ import SpriteKit
 import AVFoundation
 
 var player: AVAudioPlayer!
+var playArray = Array<AVAudioPlayer>()
+var audioPlayerSequence = AVAudioPlayer()
 
 func playNote(filename: String) {
     let url = NSBundle.mainBundle().URLForResource(filename, withExtension: nil)
@@ -60,9 +62,5 @@ class Note: SKSpriteNode {
     func play() {
         playNote(nota)
     }
-    
-    
-    
-    
     
 }
