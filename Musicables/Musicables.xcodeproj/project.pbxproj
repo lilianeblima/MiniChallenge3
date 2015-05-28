@@ -11,6 +11,8 @@
 		5E3C68421B0CD35B00E55147 /* notes.json in Resources */ = {isa = PBXBuildFile; fileRef = 5E3C68411B0CD35B00E55147 /* notes.json */; };
 		5E5E0C7A1B0DF2FF00CB4371 /* do1_semibreve.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E5E0C781B0DF2FF00CB4371 /* do1_semibreve.mp3 */; };
 		5E5E0C7B1B0DF2FF00CB4371 /* do2_semibreve.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E5E0C791B0DF2FF00CB4371 /* do2_semibreve.mp3 */; };
+		5E6D77C91B173D280052EBEB /* Particle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 5E6D77C81B173D280052EBEB /* Particle.sks */; };
+		5E6D77CB1B173D800052EBEB /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E6D77CA1B173D800052EBEB /* star.png */; };
 		5E85A4301B0B572B00F0728F /* point.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E85A42C1B0B572B00F0728F /* point.png */; };
 		5E85A4311B0B572B00F0728F /* point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E85A42D1B0B572B00F0728F /* point@2x.png */; };
 		5E85A4321B0B572B00F0728F /* note.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E85A42E1B0B572B00F0728F /* note.png */; };
@@ -26,6 +28,7 @@
 		6164CE5E1B06105500D6D0B8 /* MusicablesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6164CE5D1B06105500D6D0B8 /* MusicablesTests.swift */; };
 		61F40C3C1B0CB12200EB492E /* Introduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F40C3B1B0CB12200EB492E /* Introduction.swift */; };
 		E41CB5081B0CB20000A4C66C /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41CB5071B0CB20000A4C66C /* Note.swift */; };
+		E4F44C7E1B17349100BF65EE /* SKScrollSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F44C7D1B17349100BF65EE /* SKScrollSprite.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,8 @@
 		5E3C68411B0CD35B00E55147 /* notes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notes.json; sourceTree = "<group>"; };
 		5E5E0C781B0DF2FF00CB4371 /* do1_semibreve.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = do1_semibreve.mp3; sourceTree = "<group>"; };
 		5E5E0C791B0DF2FF00CB4371 /* do2_semibreve.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = do2_semibreve.mp3; sourceTree = "<group>"; };
+		5E6D77C81B173D280052EBEB /* Particle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Particle.sks; sourceTree = "<group>"; };
+		5E6D77CA1B173D800052EBEB /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		5E85A42C1B0B572B00F0728F /* point.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = point.png; sourceTree = "<group>"; };
 		5E85A42D1B0B572B00F0728F /* point@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "point@2x.png"; sourceTree = "<group>"; };
 		5E85A42E1B0B572B00F0728F /* note.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = note.png; sourceTree = "<group>"; };
@@ -62,6 +67,7 @@
 		6164CE5D1B06105500D6D0B8 /* MusicablesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicablesTests.swift; sourceTree = "<group>"; };
 		61F40C3B1B0CB12200EB492E /* Introduction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Introduction.swift; sourceTree = "<group>"; };
 		E41CB5071B0CB20000A4C66C /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		E4F44C7D1B17349100BF65EE /* SKScrollSprite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKScrollSprite.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,7 @@
 				5E3096711B14BE51004B0840 /* semibreve.png */,
 				5E85A42C1B0B572B00F0728F /* point.png */,
 				5E85A42D1B0B572B00F0728F /* point@2x.png */,
+				5E6D77CA1B173D800052EBEB /* star.png */,
 				5E85A42E1B0B572B00F0728F /* note.png */,
 				5E85A42F1B0B572B00F0728F /* notinha.png */,
 			);
@@ -128,6 +135,7 @@
 			children = (
 				5E5E0C771B0DF2DB00CB4371 /* Sounds */,
 				5E85A42B1B0B571400F0728F /* Sprites */,
+				E4F44C7D1B17349100BF65EE /* SKScrollSprite.swift */,
 				6164CE431B06105500D6D0B8 /* AppDelegate.swift */,
 				6164CE451B06105500D6D0B8 /* GameScene.sks */,
 				6164CE471B06105500D6D0B8 /* GameScene.swift */,
@@ -138,6 +146,7 @@
 				6164CE501B06105500D6D0B8 /* LaunchScreen.xib */,
 				6164CE411B06105500D6D0B8 /* Supporting Files */,
 				E41CB5071B0CB20000A4C66C /* Note.swift */,
+				5E6D77C81B173D280052EBEB /* Particle.sks */,
 			);
 			path = Musicables;
 			sourceTree = "<group>";
@@ -254,9 +263,11 @@
 				5E3096721B14BE51004B0840 /* semibreve.png in Resources */,
 				5E3C68421B0CD35B00E55147 /* notes.json in Resources */,
 				5E85A4301B0B572B00F0728F /* point.png in Resources */,
+				5E6D77C91B173D280052EBEB /* Particle.sks in Resources */,
 				5E85A4321B0B572B00F0728F /* note.png in Resources */,
 				5E85A4311B0B572B00F0728F /* point@2x.png in Resources */,
-				5E85A4361B0B579500F0728F /* bolinha.png in Resources */,
+				5E85A4361B0B579500F0728F /* point2.png in Resources */,
+				5E6D77CB1B173D800052EBEB /* star.png in Resources */,
 				6164CE461B06105500D6D0B8 /* GameScene.sks in Resources */,
 				5E85A4331B0B572B00F0728F /* notinha.png in Resources */,
 				6164CE4D1B06105500D6D0B8 /* Main.storyboard in Resources */,
@@ -280,6 +291,7 @@
 				6164CE481B06105500D6D0B8 /* GameScene.swift in Sources */,
 				6164CE4A1B06105500D6D0B8 /* GameViewController.swift in Sources */,
 				6164CE441B06105500D6D0B8 /* AppDelegate.swift in Sources */,
+				E4F44C7E1B17349100BF65EE /* SKScrollSprite.swift in Sources */,
 				61F40C3C1B0CB12200EB492E /* Introduction.swift in Sources */,
 				E41CB5081B0CB20000A4C66C /* Note.swift in Sources */,
 			);
