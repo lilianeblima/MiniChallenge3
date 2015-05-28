@@ -93,6 +93,24 @@ class GameScene: SKScene {
     var touchNote = false
 
 
+    // Action Buttons
+    private let actionButtonsXCoordinate = 96.0
+
+    private let actionButtonsYCoordinates = [
+        00.0,
+        30.0,
+        60.0,
+        90.0,
+    ]
+
+    private let actionButtonsNames = [
+        "backButton",
+        "playButton",
+        "saveButton",
+        "clearButton"
+    ]
+
+
     // MARK: - View Creation
 
     private func addButtons() {
@@ -313,9 +331,9 @@ class GameScene: SKScene {
             }
         }
     }
-
-    private func callSetNote(tone: Int, note: Note){
-        switch(tone){
+    
+    private func callSetNote(tone: Int, note: Note) {
+        switch(tone) {
             case 0:
                 note.setNote("do1")
             case 1:
