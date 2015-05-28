@@ -10,6 +10,10 @@ import SpriteKit
 
 var note: Note!
 var cleanButton: SKSpriteNode!
+var firstSemibreve: SKSpriteNode!
+var firstMinima: SKSpriteNode!
+var firstSeminima: SKSpriteNode!
+var firstColcheia: SKSpriteNode!
 
 
 enum StaveElements {
@@ -81,9 +85,13 @@ class GameScene: SKScene {
 
 
     // MARK: - Global Variables
+    // Added Notes
+    private var notes = [Note]()
+    //Cont Name Note
+    var cont = 0
+    //Disable double touch
+    var touchNote = false
 
-    private var notes = [Note]() // added notes
-    private var cont = 0 // cont name note
 
     // Action Buttons
     private let actionButtonsXCoordinate = 96.0
@@ -169,10 +177,8 @@ class GameScene: SKScene {
     }
     
     private func addFirstNotes() {
-        var firstSemibreve: SKSpriteNode!
-        var firstMinima: SKSpriteNode!
-        var firstSeminima: SKSpriteNode!
-        var firstColcheia: SKSpriteNode!
+        
+       
         
         firstSemibreve = SKSpriteNode(color: UIColor.purpleColor(), size: CGSize(width: 50, height: 50))
         firstSemibreve.position = CGPointMake(100, 100)
@@ -228,24 +234,27 @@ class GameScene: SKScene {
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
         let touchedNode = nodeAtPoint(location)
-
-        if touchedNode.name == "semibreve" ||
-           touchedNode.name == "minima" ||
-           touchedNode.name == "seminima" ||
-           touchedNode.name == "colcheia" {
-
+        
+        firstSemibreve.userInteractionEnabled = false
+        
+        if touchNote == false{
+        
+        if touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia"  {
             touchedNode.zPosition = 0
             addNotes(touchedNode)
         } else if cleanButton.containsPoint(location) {
             cleanButtonAction()
         }
+        }
     }
 
+    
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         let t = touches.first
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
         let touchedNode = nodeAtPoint(location)
+        touchNote = true
         
         if touchedNode.name == "Note" + String(cont) {
             touchedNode.position = location
@@ -253,11 +262,18 @@ class GameScene: SKScene {
         }
     }
 
+    func passarArray(){
+        for var x = 0; x<notes.count; x++ {
+                println(notes[x])
+        }
+    }
+    
     // MARK: Pinning Notes
 
     private func pinNoteToElementPosition(touchedNode: Note, YCoordinate: CGFloat) {
         touchedNode.zPosition = 1.0
         touchedNode.position.y = YCoordinate
+        passarArray()   
 
         if let lastNode = notes.last {
             // Add a space from the last added note's X coordinate.
@@ -286,7 +302,6 @@ class GameScene: SKScene {
                 notes.append(touchedNode)
                 touchedNode.physicsBody?.dynamic = true
                 callSetNote(index, note: touchedNode)
-                //addNotes()
                 return true
             }
         }
@@ -301,14 +316,18 @@ class GameScene: SKScene {
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         let touchItem = touches.first as! UITouch
         let touchLocation = touchItem.locationInNode(self)
+        let touchedNode = nodeAtPoint(touchLocation)
+        touchNote = false
+        if touchedNode.name == nil || touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia" {
+            returnToOriginPosition(note)
+        }
         
-        if note.containsPoint(touchLocation) {
+        if touchedNode.name == "Note" + String(cont) {
             cont++
             zPosition = 0
-            let touchedNode = nodeAtPoint(touchLocation) as! Note
-
-            if !isNodeAboveElement(touchedNode) {
-                returnToOriginPosition(touchedNode)
+          var touchedNote = touchedNode as! Note
+            if !isNodeAboveElement(touchedNote) {
+                returnToOriginPosition(touchedNote)
             }
         }
     }
