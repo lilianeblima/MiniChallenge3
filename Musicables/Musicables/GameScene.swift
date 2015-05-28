@@ -10,11 +10,7 @@ import SpriteKit
 
 var note: Note!
 var cleanButton: SKSpriteNode!
-var firstSemibreve: SKSpriteNode!
-var firstMinima: SKSpriteNode!
-var firstSeminima: SKSpriteNode!
-var firstColcheia: SKSpriteNode!
-
+var playButton: SKSpriteNode!
 
 enum StaveElements {
     case Line
@@ -162,6 +158,7 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         self.backgroundColor = SKColor.clearColor()
         addCleanButton()
+        addPlayButton()
         drawStave()
         addButtons()
         addFirstNotes()
@@ -217,14 +214,38 @@ class GameScene: SKScene {
         cleanButton.addChild(labelCleanButton)
         addChild(cleanButton)
     }
+    
+    func addPlayButton(){
+        playButton = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 150, height: 100))
+        playButton.name = "playButton"
+        playButton.position = CGPointMake(600, 150)
+        playButton.zPosition = 1
+        
+        addChild(playButton)
+        
+        let labelPlayButton = SKLabelNode(fontNamed: "Helvetica")
+        labelPlayButton.fontSize = CGFloat(22.0)
+        labelPlayButton.fontColor = SKColor.whiteColor()
+        labelPlayButton.text = "Play"
+        playButton.addChild(labelPlayButton)
+        
+    }
+    
 
     func cleanButtonAction() {
-        if notes.count > 0 {
-            for var index = 0; index < notes.count; index++ {
-                notes[index].removeFromParent()
-            }
-            notes.removeAll(keepCapacity: false)
+        for(var i = 0; i < notes.count; i++) {
+            notes[i].removeFromParent()
         }
+    }
+    
+    func playButtonAction() {
+        if(notes.isEmpty) {
+            println("Sem notas ainda")
+        }
+        else{
+    
+        }
+        
     }
 
     // MARK: - Touch Events
@@ -237,12 +258,11 @@ class GameScene: SKScene {
         
         firstSemibreve.userInteractionEnabled = false
         
-        if touchNote == false{
+        if playButton.containsPoint(location){
+            playButtonAction()
+        }
         
-        if touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia"  {
-            touchedNode.zPosition = 0
-            addNotes(touchedNode)
-        } else if cleanButton.containsPoint(location) {
+        if cleanButton.containsPoint(location){
             cleanButtonAction()
         }
         }
@@ -300,7 +320,7 @@ class GameScene: SKScene {
 
                 pinNoteToElementPosition(touchedNode, YCoordinate: elemYCoordinate)
                 notes.append(touchedNode)
-                touchedNode.physicsBody?.dynamic = true
+                happiness(touchedNode.position)
                 callSetNote(index, note: touchedNode)
                 return true
             }
@@ -316,19 +336,18 @@ class GameScene: SKScene {
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         let touchItem = touches.first as! UITouch
         let touchLocation = touchItem.locationInNode(self)
-        let touchedNode = nodeAtPoint(touchLocation)
-        touchNote = false
-        if touchedNode.name == nil || touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia" {
-            returnToOriginPosition(note)
-        }
-        
-        if touchedNode.name == "Note" + String(cont) {
-            cont++
-            zPosition = 0
-          var touchedNote = touchedNode as! Note
-            if !isNodeAboveElement(touchedNote) {
-                returnToOriginPosition(touchedNote)
+
+        if note.containsPoint(touchLocation) {
+            let touchedNode = nodeAtPoint(touchLocation) as! Note
+
+            
+            if !isNodeAboveElement(touchedNode) {
+                returnToOriginPosition(touchedNode)
+                
             }
+            
+            
+            
         }
     }
     
@@ -363,6 +382,27 @@ class GameScene: SKScene {
             default:
                 note.setNote("do1")
         }
+    }
+    
+    private func happiness(pos: CGPoint){
+        var emitterNode = SKEmitterNode(fileNamed: "Particle.sks")
+        emitterNode.particlePosition = pos
+        self.addChild(emitterNode)
+
+        
+        // remove particles after 0.6 seconds
+        self.runAction(SKAction.waitForDuration(1), completion: {
+            emitterNode.particleAlpha = 1
+            self.runAction(SKAction.waitForDuration(1), completion: {
+                emitterNode.particleAlpha = 0
+                emitterNode.removeFromParent()
+            })
+
+        })
+    }
+    
+    override func update(currentTime: NSTimeInterval) {
+        
     }
 
     // MARK: - Animations
