@@ -10,6 +10,7 @@ import SpriteKit
 
 var note: Note!
 var cleanButton: SKSpriteNode!
+var musicButton: SKSpriteNode!
 var firstSemibreve: SKSpriteNode!
 var firstMinima: SKSpriteNode!
 var firstSeminima: SKSpriteNode!
@@ -91,6 +92,7 @@ class GameScene: SKScene {
     var cont = 0
     //Disable double touch
     var touchNote = false
+    var dropNote = false
 
 
     // Action Buttons
@@ -162,6 +164,7 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         self.backgroundColor = SKColor.clearColor()
         addCleanButton()
+        addMusicButton()
         drawStave()
         addButtons()
         addFirstNotes()
@@ -177,9 +180,6 @@ class GameScene: SKScene {
     }
     
     private func addFirstNotes() {
-        
-       
-        
         firstSemibreve = SKSpriteNode(color: UIColor.purpleColor(), size: CGSize(width: 50, height: 50))
         firstSemibreve.position = CGPointMake(100, 100)
         firstSemibreve.name = "semibreve"
@@ -201,6 +201,21 @@ class GameScene: SKScene {
         addChild(firstMinima)
         addChild(firstSeminima)
         addChild(firstColcheia)
+    }
+    
+    private func addMusicButton() {
+        musicButton = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 200, height: 100))
+        musicButton.name = "cleanButton"
+        musicButton.position = CGPointMake(600, 150)
+        musicButton.zPosition = 1
+        
+        let labelMusicButton = SKLabelNode(fontNamed: "Helvetica")
+        labelMusicButton.fontSize = CGFloat(22.0)
+        labelMusicButton.fontColor = SKColor.whiteColor()
+        labelMusicButton.text = "Music"
+        
+        musicButton.addChild(labelMusicButton)
+        addChild(musicButton)
     }
 
     private func addCleanButton() {
@@ -258,6 +273,7 @@ class GameScene: SKScene {
         
         if touchedNode.name == "Note" + String(cont) {
             touchedNode.position = location
+            dropNote = true
             touchedNode.zPosition = 15
         }
     }
@@ -312,11 +328,12 @@ class GameScene: SKScene {
         let touchLocation = touchItem.locationInNode(self)
         let touchedNode = nodeAtPoint(touchLocation)
         touchNote = false
-        if touchedNode.name == nil || touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia" {
+        if (touchedNode.name == nil || touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia") && (dropNote == true) {
             returnToOriginPosition(note)
         }
         
         if touchedNode.name == "Note" + String(cont) {
+            dropNote = false
             cont++
             zPosition = 0
           var touchedNote = touchedNode as! Note
