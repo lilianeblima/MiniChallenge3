@@ -266,7 +266,7 @@
 				5E6D77C91B173D280052EBEB /* Particle.sks in Resources */,
 				5E85A4321B0B572B00F0728F /* note.png in Resources */,
 				5E85A4311B0B572B00F0728F /* point@2x.png in Resources */,
-				5E85A4361B0B579500F0728F /* point2.png in Resources */,
+				5E85A4361B0B579500F0728F /* bolinha.png in Resources */,
 				5E6D77CB1B173D800052EBEB /* star.png in Resources */,
 				6164CE461B06105500D6D0B8 /* GameScene.sks in Resources */,
 				5E85A4331B0B572B00F0728F /* notinha.png in Resources */,

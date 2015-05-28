@@ -93,6 +93,8 @@ class GameScene: SKScene {
     //Disable double touch
     var touchNote = false
     var dropNote = false
+    //Count To Music
+    var countMusic = 0
 
 
     // Action Buttons
@@ -242,6 +244,26 @@ class GameScene: SKScene {
         }
     }
 
+    private func playMusic() {
+        var sound:String!
+        var sound2:String!
+        
+        sound = notes[countMusic].getSound()
+        
+        runAction(SKAction .playSoundFileNamed(sound, waitForCompletion: true), completion: {
+            if self.countMusic < self.notes.count-1 {
+                self.countMusic++
+                self.playMusic()
+            }
+            
+        })
+        
+    }
+    
+    func playSound(s:SKAction){
+        runAction(s)
+    }
+    
     // MARK: - Touch Events
 
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -254,12 +276,18 @@ class GameScene: SKScene {
         
         if touchNote == false{
         
-        if touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia"  {
-            touchedNode.zPosition = 0
-            addNotes(touchedNode)
-        } else if cleanButton.containsPoint(location) {
-            cleanButtonAction()
+            if touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia"  {
+                touchedNode.zPosition = 0
+                addNotes(touchedNode)
+            } else if cleanButton.containsPoint(location) {
+                cleanButtonAction()
         }
+            else if musicButton.containsPoint(location) {
+                self.countMusic = 0
+                if self.notes.count != 0 {
+                    playMusic()
+                }
+            }
         }
     }
 

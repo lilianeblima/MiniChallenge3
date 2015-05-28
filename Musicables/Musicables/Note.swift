@@ -60,6 +60,10 @@ class Note: SKSpriteNode {
         
     }
     
+    func getSound()->String {
+        return nota
+    }
+    
     func play() {
         playNote(nota)
     }
