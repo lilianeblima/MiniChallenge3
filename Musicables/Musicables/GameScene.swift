@@ -428,6 +428,15 @@ class GameScene: SKScene {
     private func scaleUp(node: SKNode){
         let liftUp = SKAction.scaleTo(0.7, duration: 0.2)
         node.runAction(liftUp, withKey: "pickup")
+        let liftDown = SKAction.scaleTo(0.5, duration: 0.2)
+        node.runAction(liftUp, withKey: "pickup")
+        
+        let arrayAnimation: [SKAction] = [
+            liftUp,
+            liftDown
+        ]
+        
+        node.runAction(SKAction.sequence(arrayAnimation))
         
     }
     
@@ -435,4 +444,6 @@ class GameScene: SKScene {
         let dropDown = SKAction.scaleTo(0.4, duration: 0.2)
         node.runAction(dropDown, withKey: "drop")
     }
+    
+
 }
