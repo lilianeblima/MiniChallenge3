@@ -23,7 +23,7 @@ enum StaveElements {
 }
 
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKScrollSpriteDelegate {
 
     // MARK: - Constants
     // Not all lines and spaces are visible, only those
@@ -159,12 +159,22 @@ class GameScene: SKScene {
                 shape = drawShape(YCoordinate: YCoordinate, shape: StaveElements.Space, color: color)
             }
 
-            addChild(shape)
+            self.addChild(shape)
         }
     }
-
+    
+    // MARK - scrollSprite
+    
+    var scrollSprite: SKScrollSprite!
+    
     override func didMoveToView(view: SKView) {
         self.backgroundColor = SKColor.clearColor()
+        
+        self.scrollSprite = SKScrollSprite(size: CGSizeMake(self.size.width, self.size.height/2), contentSize: CGSizeMake(self.size.width*2, self.size.height/2))
+        self.scrollSprite.position = CGPointMake(self.size.width/2, self.size.height/2)
+        self.scrollSprite.color = SKColor.whiteColor()
+        self.addChild(self.scrollSprite)
+        
         addCleanButton()
         addMusicButton()
         drawStave()

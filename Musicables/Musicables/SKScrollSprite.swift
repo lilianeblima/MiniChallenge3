@@ -31,6 +31,13 @@ class SKScrollSprite: SKSpriteNode, UIScrollViewDelegate {
         self.init(color: nil, size: size)
         self.contentSprite = SKSpriteNode(color: nil, size: contentSize)
         self.contentSize = contentSize
+        self.contentSpriteDefaultPosition = contentSpriteDefPosition()
+        self.contentSpriteCurrentPosition = contentSpriteDefPosition()
+        self.contentOffset = CGPointZero
+        self.minimumContentOffset = minContentOffset()
+        self.maximumContentOffset = maxContentOffset()
+        self.setContentOffset(CGPointMake(30, 0))
+        self.contentSpriteCurrentPosition = contentSpriteCurPosition()
         self.contentSprite.position = self.contentSpriteDefaultPosition
         self.addChild(self.contentSprite)
         self.userInteractionEnabled = true
@@ -63,6 +70,7 @@ class SKScrollSprite: SKSpriteNode, UIScrollViewDelegate {
     }
     
     func setContentOffset(contentOffset: CGPoint) {
+        println("Xablau")
         if !CGPointEqualToPoint(self.contentOffset, contentOffset) {
             self.setContentOffset(contentOffset, animated: false)
         }
@@ -108,6 +116,7 @@ class SKScrollSprite: SKSpriteNode, UIScrollViewDelegate {
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         super.touchesBegan(touches, withEvent: event)
+        println("Xablau")
     }
     
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -116,6 +125,7 @@ class SKScrollSprite: SKSpriteNode, UIScrollViewDelegate {
         let touch = touches.first as! UITouch
         var location = touch.locationInNode(self)
         var previousLocation = touch.previousLocationInNode(self)
+        println("ScrollMove")
         
         var contentOffset = self.contentOffset
         var deltaX = location.x - previousLocation.x
