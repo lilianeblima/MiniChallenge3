@@ -179,6 +179,7 @@ class GameScene: SKScene {
         note.name = "Note" + String(cont)
         note.zPosition = 15
         addChild(note)
+        scaleUp(note)
     }
     
     private func addFirstNotes() {
@@ -347,7 +348,7 @@ class GameScene: SKScene {
         return false
     }
 
-    private func returnToOriginPosition(node: Note) {
+    private func returnToOriginPosition(node: SKNode) {
         node.removeFromParent()
     }
  
@@ -364,6 +365,7 @@ class GameScene: SKScene {
             dropNote = false
             cont++
             zPosition = 0
+            scaleDown(touchedNode)
           var touchedNote = touchedNode as! Note
             if !isNodeAboveElement(touchedNote) {
                 returnToOriginPosition(touchedNote)
@@ -414,15 +416,23 @@ class GameScene: SKScene {
         var emitterNode = SKEmitterNode(fileNamed: "Particle.sks")
         emitterNode.particlePosition = pos
         self.addChild(emitterNode)
-        
+        emitterNode.zPosition = 0
         self.runAction(SKAction.waitForDuration(1),completion: {
-          emitterNode.particleAlpha = 1
             self.runAction(SKAction.waitForDuration(1), completion: {
                 emitterNode.particleAlpha = 0
                 emitterNode.removeFromParent()
                 })
         })
     }
-
-
+    
+    private func scaleUp(node: SKNode){
+        let liftUp = SKAction.scaleTo(0.7, duration: 0.2)
+        node.runAction(liftUp, withKey: "pickup")
+        
+    }
+    
+    private func scaleDown(node: SKNode){
+        let dropDown = SKAction.scaleTo(0.4, duration: 0.2)
+        node.runAction(dropDown, withKey: "drop")
+    }
 }
