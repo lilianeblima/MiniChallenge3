@@ -309,16 +309,21 @@ class GameScene: SKScene {
     
     // MARK: Pinning Notes
 
-    private func pinNoteToElementPosition(touchedNode: Note, YCoordinate: CGFloat) {
+    private func pinNoteToElementPosition(touchedNode: Note, y: CGFloat) {
         touchedNode.zPosition = 1.0
-        touchedNode.position.y = YCoordinate
-
+        var YCoordinate = y
+        //touchedNode.position.y = YCoordinate
+        var XCoordinate: CGFloat!
         if let lastNode = notes.last {
             // Add a space from the last added note's X coordinate.
-            touchedNode.position.x = (lastNode.position.x + spaceBetweenNotes)
+            //touchedNode.position.x = (lastNode.position.x + spaceBetweenNotes)
+            XCoordinate = (lastNode.position.x + spaceBetweenNotes)
         } else {
-            touchedNode.position.x = spaceFromStart
+            //touchedNode.position.x = spaceFromStart
+            XCoordinate = spaceFromStart
         }
+        
+        moveToAnimation(touchedNode, position: CGPoint(x: XCoordinate, y: YCoordinate))
     }
 
     private func isNodeAboveElement(touchedNode: Note) -> Bool {
@@ -336,8 +341,7 @@ class GameScene: SKScene {
             if distanceToThisElement <= lineWidth {
                 // TODO: Animate element when node is above it.
 
-                pinNoteToElementPosition(touchedNode, YCoordinate: elemYCoordinate)
-                happiness(touchedNode.position)
+                pinNoteToElementPosition(touchedNode, y: elemYCoordinate)
                 notes.append(touchedNode)
                 touchedNode.physicsBody?.dynamic = true
                 callSetNote(index, note: touchedNode)
@@ -429,7 +433,7 @@ class GameScene: SKScene {
         let liftUp = SKAction.scaleTo(0.7, duration: 0.2)
         node.runAction(liftUp, withKey: "pickup")
         let liftDown = SKAction.scaleTo(0.5, duration: 0.2)
-        node.runAction(liftUp, withKey: "pickup")
+        node.runAction(liftUp, withKey: "pickdown")
         
         let arrayAnimation: [SKAction] = [
             liftUp,
@@ -443,6 +447,12 @@ class GameScene: SKScene {
     private func scaleDown(node: SKNode){
         let dropDown = SKAction.scaleTo(0.4, duration: 0.2)
         node.runAction(dropDown, withKey: "drop")
+    }
+    
+    private func moveToAnimation(node: SKNode, position: CGPoint){
+        let animation = SKAction.moveTo(position, duration: 0.5)
+        node.runAction(animation, withKey: "move")
+        happiness(position)
     }
     
 
