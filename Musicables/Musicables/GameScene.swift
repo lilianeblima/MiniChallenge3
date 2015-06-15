@@ -95,6 +95,9 @@ class GameScene: SKScene {
     var dropNote = false
     //Count To Music
     var countMusic = 0
+    
+    // Initial Sound
+    private let initialSound = "initial_sound_main_game_scene.mp3"
 
 
     // Action Buttons
@@ -170,6 +173,7 @@ class GameScene: SKScene {
         drawStave()
         addButtons()
         addFirstNotes()
+        playNote(initialSound)
     }
 
     
@@ -253,8 +257,12 @@ class GameScene: SKScene {
         
         runAction(SKAction .playSoundFileNamed(sound, waitForCompletion: true), completion: {
             if self.countMusic < self.notes.count-1 {
+                
+                self.playNoteAnimation(self.notes[self.countMusic+1])
                 self.countMusic++
+                
                 self.playMusic()
+                
             }
             
         })
@@ -416,12 +424,13 @@ class GameScene: SKScene {
 
     }
     
-    private func happiness(pos: CGPoint){
+    private func happiness(pos: CGPoint) {
         var emitterNode = SKEmitterNode(fileNamed: "Particle.sks")
         emitterNode.particlePosition = pos
         self.addChild(emitterNode)
         emitterNode.zPosition = 0
-        self.runAction(SKAction.waitForDuration(1),completion: {
+        
+        return self.runAction(SKAction.waitForDuration(1),completion: {
             self.runAction(SKAction.waitForDuration(1), completion: {
                 emitterNode.particleAlpha = 0
                 emitterNode.removeFromParent()
@@ -444,6 +453,20 @@ class GameScene: SKScene {
         
     }
     
+    private func playNoteAnimation(node: SKNode){
+        let liftUp = SKAction.scaleTo(0.7, duration: 0.2)
+        node.runAction(liftUp, withKey: "pickup")
+        let liftDown = SKAction.scaleTo(0.4, duration: 0.2)
+        node.runAction(liftUp, withKey: "pickdown")
+        
+        let arrayAnimation: [SKAction] = [
+            liftUp,
+            liftDown
+        ]
+        
+        node.runAction(SKAction.sequence(arrayAnimation))
+    }
+    
     private func scaleDown(node: SKNode){
         let dropDown = SKAction.scaleTo(0.4, duration: 0.2)
         node.runAction(dropDown, withKey: "drop")
@@ -452,7 +475,11 @@ class GameScene: SKScene {
     private func moveToAnimation(node: SKNode, position: CGPoint){
         let animation = SKAction.moveTo(position, duration: 0.5)
         node.runAction(animation, withKey: "move")
-        happiness(position)
+        
+        node.runAction(SKAction.waitForDuration(0.5), completion: {
+            self.happiness(node.position)
+        })
+       
     }
     
 

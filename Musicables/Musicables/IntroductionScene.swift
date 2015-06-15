@@ -35,6 +35,9 @@ class IntroductionScene: SKScene {
     private let backgroundImageName = "background"
     private let backgroundXCoordinate: CGFloat = 512.0
     private let backgroundYCoordinate: CGFloat = 384.0
+    
+    // Background Sound
+    private let backgroundSound = "initial_background.mp3"
 
     // Play Button
     private let playImageName = "playButton"
@@ -87,10 +90,12 @@ class IntroductionScene: SKScene {
     override func didMoveToView(view: SKView) {
         addBackground()
         addButtons()
+        playNote(backgroundSound)
     }
 
     private func loadGameScene() {
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
+            player.stop()
             view!.presentScene(scene)
         }
     }
