@@ -16,7 +16,6 @@ var firstMinima: SKSpriteNode!
 var firstSeminima: SKSpriteNode!
 var firstColcheia: SKSpriteNode!
 
-
 enum StaveElements {
     case Line
     case Space
@@ -95,6 +94,15 @@ class GameScene: SKScene {
     var dropNote = false
     //Count To Music
     var countMusic = 0
+    
+    //To Scroll
+    
+    var touchInitScroll: CGPoint!
+    var touchEndScroll: CGPoint!
+    var touchScroll = 0
+    
+    var scrollX = 0
+    var scrollY = 0
     
     // Initial Sound
     private let initialSound = "initial_sound_main_game_scene.mp3"
@@ -280,10 +288,13 @@ class GameScene: SKScene {
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
         let touchedNode = nodeAtPoint(location)
-        
+        touchInitScroll = location
         firstSemibreve.userInteractionEnabled = false
-        
-        if touchNote == false{
+
+        if touchNote == false {
+            if touchedNode.name == nil {
+                touchScroll = 1
+            }
         
             if touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia"  {
                 touchedNode.zPosition = 0
@@ -301,12 +312,38 @@ class GameScene: SKScene {
     }
 
     
+    
+    private func scroll() {
+    }
+    
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         let t = touches.first
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
         let touchedNode = nodeAtPoint(location)
         touchNote = true
+        touchEndScroll = location
+        
+        if touchScroll == 1 {
+            scrollX = Int(touchInitScroll.x) - Int(touchEndScroll.x)
+            scrollY = Int(touchInitScroll.y) - Int(touchEndScroll.y)
+
+            if scrollY <= 100 {
+                if(scrollX > 0){
+                    if scrollX > 10{
+                    println("Esquerda")
+                        Left()
+                    }
+                }
+                if(scrollX < 0 ) {
+                    if abs(scrollX) > 10 {
+                    println("Direita")
+                        Right()
+                    }
+                }
+                
+            }
+        }
         
         if touchedNode.name == "Note" + String(cont) {
             touchedNode.position = location
@@ -363,12 +400,14 @@ class GameScene: SKScene {
     private func returnToOriginPosition(node: SKNode) {
         node.removeFromParent()
     }
- 
+
     override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
         let touchItem = touches.first as! UITouch
         let touchLocation = touchItem.locationInNode(self)
         let touchedNode = nodeAtPoint(touchLocation)
         touchNote = false
+        touchScroll = 0
+
         if (touchedNode.name == nil || touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia") && (dropNote == true) {
             returnToOriginPosition(note)
         }
@@ -384,6 +423,37 @@ class GameScene: SKScene {
             }
         }
     }
+    
+    
+    private func Left(){
+        if notes.count != 0 {
+        
+        for var v = 0; v < notes.count; v++ {
+            notes[v].position.x = CGFloat((Int(notes[v].position.x) - abs(scrollX)/50))
+        }
+        }
+    }
+    
+    private func Right(){
+        
+        if notes.count != 0 {
+        for var v = 0; v < notes.count; v++ {
+            notes[v].position.x = CGFloat((Int(notes[v].position.x) + abs(scrollX)/50))
+            }
+        }
+        }
+    
+  
+        
+    private func Move(){
+        
+        if notes.count != 0 {
+            for var v = 0; v < notes.count; v++ {
+                notes[v].position.x = CGFloat((Int(notes[v].position.x) + abs(10)/90))
+            }
+        }
+    }
+    
     
     private func callSetNote(tone: Int, note: Note) {
         switch(tone) {
