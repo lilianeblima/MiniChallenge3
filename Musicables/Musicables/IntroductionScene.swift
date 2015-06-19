@@ -70,7 +70,6 @@ class IntroductionScene: SKScene {
         let playButton = SKSpriteNode(imageNamed: playImageName)
         let loadButton = SKSpriteNode(imageNamed: loadImageName)
         let settButton = SKSpriteNode(imageNamed: settImageName)
-
         // Play button reuses the background position.
         playButton.position = CGPointMake(backgroundXCoordinate, backgroundYCoordinate)
         loadButton.position = CGPointMake(loadXCoordinate, loadYCoordinate)
