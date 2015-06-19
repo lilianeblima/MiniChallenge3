@@ -33,6 +33,7 @@
 		5E0767921B2A0E01001C088B /* fa2_minima.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E0767851B2A0E01001C088B /* fa2_minima.mp3 */; };
 		5E0767931B2A0E01001C088B /* sol2_minima.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E0767861B2A0E01001C088B /* sol2_minima.mp3 */; };
 		5E0767941B2A0E01001C088B /* la2_minima.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E0767871B2A0E01001C088B /* la2_minima.mp3 */; };
+		5E1EA5A01B34A631007E87E9 /* remove_note.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E1EA59F1B34A631007E87E9 /* remove_note.mp3 */; };
 		5E3096721B14BE51004B0840 /* semibreve.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E3096711B14BE51004B0840 /* semibreve.png */; };
 		5E39B0CD1B2A612F00649898 /* do1_seminima.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E39B0C01B2A612F00649898 /* do1_seminima.mp3 */; };
 		5E39B0CE1B2A612F00649898 /* re1_seminima.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5E39B0C11B2A612F00649898 /* re1_seminima.mp3 */; };
@@ -120,6 +121,7 @@
 		5E0767851B2A0E01001C088B /* fa2_minima.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fa2_minima.mp3; sourceTree = "<group>"; };
 		5E0767861B2A0E01001C088B /* sol2_minima.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sol2_minima.mp3; sourceTree = "<group>"; };
 		5E0767871B2A0E01001C088B /* la2_minima.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = la2_minima.mp3; sourceTree = "<group>"; };
+		5E1EA59F1B34A631007E87E9 /* remove_note.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = remove_note.mp3; sourceTree = "<group>"; };
 		5E3096711B14BE51004B0840 /* semibreve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = semibreve.png; sourceTree = "<group>"; };
 		5E39B0C01B2A612F00649898 /* do1_seminima.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = do1_seminima.mp3; sourceTree = "<group>"; };
 		5E39B0C11B2A612F00649898 /* re1_seminima.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = re1_seminima.mp3; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 				5E07676A1B2950E6001C088B /* si1_semibreve.mp3 */,
 				5E0767751B29571E001C088B /* fa2_semibreve.mp3 */,
 				5E0767761B29571E001C088B /* la2_semibreve.mp3 */,
+				5E1EA59F1B34A631007E87E9 /* remove_note.mp3 */,
 				5E0767771B29571E001C088B /* sol2_semibreve.mp3 */,
 				5E07676F1B295507001C088B /* do2_semibreve.mp3 */,
 				5E0767701B295507001C088B /* mi2_semibreve.mp3 */,
@@ -452,6 +455,7 @@
 				5E85A4311B0B572B00F0728F /* point@2x.png in Resources */,
 				5E39B0D31B2A612F00649898 /* si1_seminima.mp3 in Resources */,
 				5E85A4361B0B579500F0728F /* bolinha.png in Resources */,
+				5E1EA5A01B34A631007E87E9 /* remove_note.mp3 in Resources */,
 				5E39B0ED1B2A6C0200649898 /* si1_colcheia.mp3 in Resources */,
 				5E39B0F21B2A6C0200649898 /* sol2_colcheia.mp3 in Resources */,
 				5E07678C1B2A0E01001C088B /* sol1_minima.mp3 in Resources */,

@@ -11,6 +11,7 @@ import SpriteKit
 var note: Note!
 var cleanButton: SKSpriteNode!
 var musicButton: SKSpriteNode!
+var undoButton: SKSpriteNode!
 var firstSemibreve: SKSpriteNode!
 var firstMinima: SKSpriteNode!
 var firstSeminima: SKSpriteNode!
@@ -98,7 +99,9 @@ class GameScene: SKScene {
     
     // Initial Sound
     private let initialSound = "initial_sound_main_game_scene.mp3"
-
+    
+    // Remove Sound
+    private let removeSound = "remove_note.mp3"
 
     // Action Buttons
     private let actionButtonsXCoordinate = 96.0
@@ -114,7 +117,8 @@ class GameScene: SKScene {
         "backButton",
         "playButton",
         "saveButton",
-        "clearButton"
+        "clearButton",
+        "undoButton"
     ]
 
 
@@ -170,6 +174,7 @@ class GameScene: SKScene {
         self.backgroundColor = SKColor.clearColor()
         addCleanButton()
         addMusicButton()
+        addUndoButton()
         drawStave()
         addButtons()
         addFirstNotes()
@@ -211,7 +216,7 @@ class GameScene: SKScene {
     }
     
     private func addMusicButton() {
-        musicButton = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 200, height: 100))
+        musicButton = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 150, height: 100))
         musicButton.name = "cleanButton"
         musicButton.position = CGPointMake(600, 150)
         musicButton.zPosition = 1
@@ -226,9 +231,9 @@ class GameScene: SKScene {
     }
 
     private func addCleanButton() {
-        cleanButton = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 200, height: 100))
+        cleanButton = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 150, height: 100))
         cleanButton.name = "cleanButton"
-        cleanButton.position = CGPointMake(800, 150)
+        cleanButton.position = CGPointMake(750, 150)
         cleanButton.zPosition = 1
 
         let labelCleanButton = SKLabelNode(fontNamed: "Helvetica")
@@ -239,6 +244,21 @@ class GameScene: SKScene {
         cleanButton.addChild(labelCleanButton)
         addChild(cleanButton)
     }
+    
+    private func addUndoButton() {
+        undoButton = SKSpriteNode(color: UIColor.greenColor(), size: CGSize(width: 150, height: 100))
+        undoButton.name = "undoButton"
+        undoButton.position = CGPointMake(900, 150)
+        undoButton.zPosition = 1
+        
+        let labelUndoButton = SKLabelNode(fontNamed: "Helvetica")
+        labelUndoButton.fontSize = CGFloat(22.0)
+        labelUndoButton.fontColor = SKColor.whiteColor()
+        labelUndoButton.text = "Desfazer"
+        
+        undoButton.addChild(labelUndoButton)
+        addChild(undoButton)
+    }
 
     func cleanButtonAction() {
         if notes.count > 0 {
@@ -248,7 +268,14 @@ class GameScene: SKScene {
             notes.removeAll(keepCapacity: false)
         }
     }
-
+    
+    private func undoButtonAction() {
+        if notes.count > 0 {
+            removeNoteAction(notes.last!)
+            notes.removeLast()
+        }
+    }
+    
     private func playMusic() {
         var sound:String!
         var sound2:String!
@@ -288,14 +315,18 @@ class GameScene: SKScene {
             if touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia"  {
                 touchedNode.zPosition = 0
                 addNotes(touchedNode)
-            } else if cleanButton.containsPoint(location) {
+            }
+            else if cleanButton.containsPoint(location) {
                 cleanButtonAction()
-        }
+            }
             else if musicButton.containsPoint(location) {
                 self.countMusic = 0
                 if self.notes.count != 0 {
                     playMusic()
                 }
+            }
+            else if undoButton.containsPoint(location) {
+                undoButtonAction()
             }
         }
     }
@@ -480,6 +511,19 @@ class GameScene: SKScene {
             self.happiness(node.position)
         })
        
+    }
+    
+    private func removeNoteAction(note: Note) {
+        note.zPosition = 200
+        let animation = SKAction.moveToY(-40, duration: 1)
+        playNote(removeSound)
+        note.runAction(animation, withKey: "remove")
+        
+        note.runAction(SKAction.waitForDuration(2), completion: {
+            note.removeFromParent()
+        })
+        
+    
     }
     
 
