@@ -299,10 +299,19 @@ class GameScene: SKScene {
         runAction(SKAction .playSoundFileNamed(sound, waitForCompletion: true), completion: {
             if self.countMusic < self.notes.count-1 {
                 
-                self.playNoteAnimation(self.notes[self.countMusic+1])
-                self.countMusic++
+                let priorityy = DISPATCH_QUEUE_PRIORITY_DEFAULT
+                dispatch_async(dispatch_get_global_queue(priorityy, 0)) {
+                    
+                    self.playNoteAnimation(self.notes[self.countMusic+1])
+                    self.countMusic++
+                    self.playMusic()
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                        
+                        self.MoveMusic()
+                    }
+                }
                 
-                self.playMusic()
             }
         })
     }
@@ -320,18 +329,15 @@ class GameScene: SKScene {
         let touchedNode = nodeAtPoint(location)
         touchInitScroll = location
         firstSemibreve.userInteractionEnabled = false
-        
-        if notes.count != 0{
-            println("Nota[0] \(notes[0].position.x)")
-
-        }
-        
+        println("Began")
         if touchNote == false {
+            println("1")
             if touchedNode.name == nil {
                 touchScroll = 1
             }
             
             if lastPositionNote > 900 || lastNotePositionOutScreen == true || disableScrollLeft == false{
+                println("2")
                 disableScrollRight = false
                 disableScrollLeft = false
                 lastNotePositionOutScreen = true
@@ -339,12 +345,15 @@ class GameScene: SKScene {
             
             if touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia"  {
                 touchedNode.zPosition = 0
+                println("3")
                 
                 if scrollHasBeenActivaed == true {
+                    println("4")
                     MoveScreen()
                 }
                 
                 if lastPositionNote > 900 {
+                    println("5")
                     //Se houver mais notas do que mostrar na tela
                     Move()
                 }
@@ -368,11 +377,12 @@ class GameScene: SKScene {
     }
    
     private func scroll() {
+        println("Scroll")
         var t1 = notes.last?.position
         if notes.count != 0 {
             var t2 = notes[0].position.x
-            //println(t2)
-        
+
+            
         
         if touchScroll == 1  {
             
@@ -381,8 +391,6 @@ class GameScene: SKScene {
             if scrollY <= 100 {
                 if scrollX > 0 && disableScrollLeft == false {
                     if scrollX > 5{
-                        // println("Esquerda")
-                        println(notes.last?.position.x)
                         if notes.last?.position.x <= spaceFromStart{
                             disableScrollLeft = true
                         }
@@ -395,10 +403,7 @@ class GameScene: SKScene {
                         if notes[0].position.x >= spaceFromStart {
                             //Primeira nota volta para posicao inicial
                             disableScrollRight = true
-                            
                         }
-                        
-                        //println("Direita")
                         Right()
                     }
                 }
@@ -408,6 +413,7 @@ class GameScene: SKScene {
     }
     
     private func Left(){
+        println("Left")
         if disableScrollLeft == false {
             scrollHasBeenActivaed = true
             if notes.count != 0 {
@@ -419,6 +425,7 @@ class GameScene: SKScene {
     }
     
     private func Right(){
+        println("Right")
         if disableScrollRight == false {
             scrollHasBeenActivaed = true
             if notes.count != 0 {
@@ -432,6 +439,7 @@ class GameScene: SKScene {
     
     
     private func Move(){
+        println("Move")
         if notes.count != 0 {
             for var v = 0; v < notes.count; v++ {
                 notes[v].position.x = CGFloat((Int(notes[v].position.x) - 170))
@@ -443,11 +451,15 @@ class GameScene: SKScene {
     
     private func MoveScreen(){
         if notes.count >= 5 {
-            
+            println("MoveScreen")
             for var p = 0; p < notes.count; p++ {
                 if notes[p].position.x >= (spaceFromStart - 10) && notes[p].position.x <= (spaceFromStart+10){
                 n0 = notes[p].position.x
                 break
+                }
+                
+                else if notes[p].position.x >= (spaceFromStart - 20) && notes[p].position.x <= (spaceFromStart+20){
+                    n0 = notes[p].position.x
                 }
             }
        
@@ -458,9 +470,7 @@ class GameScene: SKScene {
                 if v == 0 {
                  notes[v].position.x = CGFloat(Int(notes[v+1].position.x) - 83)
                 }
-                println("nota[ \(v)] =  \(notes[v].position.x)")
                 notes[v].position.x = CGFloat(Int(notes[v].position.x) + Int(n0 - nf))
-                println("nota[ \(v)] =  \(notes[v].position.x)")
             }
             scrollHasBeenActivaed = false
         }
@@ -470,6 +480,7 @@ class GameScene: SKScene {
     var nsf:CGFloat!
     
     private func MoveStart(){
+        println("MoveStart")
         if notes.count >= 2 {
             for var p = 0; p < notes.count; p++ {
                 if notes[p].position.x >= (spaceFromStart - 10) && notes[p].position.x <= (spaceFromStart+10){
@@ -479,7 +490,6 @@ class GameScene: SKScene {
                 
                 else if notes[p].position.x >= (spaceFromStart - 20) && notes[p].position.x <= (spaceFromStart+20){
                     nsf = notes[p].position.x
-                    break
                 }
             }
             ns0 = notes[0].position.x
@@ -488,15 +498,23 @@ class GameScene: SKScene {
                 if v == 0 {
                     notes[v].position.x = CGFloat(Int(notes[v+1].position.x) - 83)
                 }
-                println("nota[ \(v)] =  \(notes[v].position.x)")
                 notes[v].position.x = CGFloat(Int(notes[v].position.x) + abs(Int(ns0 - nsf)))
-                println("nota[ \(v)] =  \(notes[v].position.x)")
             }
             scrollHasBeenActivaed = true
         }
     }
     
+    private func MoveMusic(){
+        println("MoveMusic")
+        for var v = 0; v < notes.count; v++ {
+            notes[v].position.x = CGFloat(Int(notes[v].position.x) - 5 * 15)
+        }
+
+        
+    }
+    
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
+        println("Moved")
         let t = touches.first
         let touchItem = t as! UITouch
         let location = touchItem.locationInNode(self)
@@ -531,7 +549,6 @@ class GameScene: SKScene {
         lastPositionNote = XCoordinate
         moveToAnimation(touchedNode, position: CGPoint(x: XCoordinate, y: YCoordinate))
         
-        println(XCoordinate)
     }
     
     private func isNodeAboveElement(touchedNode: Note) -> Bool {
@@ -573,7 +590,7 @@ class GameScene: SKScene {
         let touchedNode = nodeAtPoint(touchLocation)
         touchNote = false
         touchScroll = 0
-        
+        println("End")
         if (touchedNode.name == nil || touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia") && (dropNote == true) {
             returnToOriginPosition(note)
         }
