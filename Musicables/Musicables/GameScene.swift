@@ -378,11 +378,6 @@ class GameScene: SKScene {
             
             scrollX = Int(touchInitScroll.x) - Int(touchEndScroll.x)
             scrollY = Int(touchInitScroll.y) - Int(touchEndScroll.y)
-            //println(scrollX)
-            //println(scrollY)
-           //println(disableScrollLeft)
-           /// println(disableScrollRight)
-            
             if scrollY <= 100 {
                 if scrollX > 0 && disableScrollLeft == false {
                     if scrollX > 5{
@@ -447,7 +442,7 @@ class GameScene: SKScene {
     var n0: CGFloat!
     
     private func MoveScreen(){
-        if notes.count >= 2 {
+        if notes.count >= 5 {
             
             for var p = 0; p < notes.count; p++ {
                 if notes[p].position.x >= (spaceFromStart - 10) && notes[p].position.x <= (spaceFromStart+10){
