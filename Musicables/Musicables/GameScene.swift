@@ -108,6 +108,7 @@ class GameScene: SKScene {
     var lastPositionNote: CGFloat!
     var disableScrollRight = true
     var disableScrollLeft = true
+    var lastNotePositionOutScreen = false
     
     // Initial Sound
     private let initialSound = "initial_sound_main_game_scene.mp3"
@@ -311,8 +312,6 @@ class GameScene: SKScene {
     
     // MARK: - Touch Events
 
-    var posicaodanotajapassou = false
-    
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         let t = touches.first
         let touchItem = t as! UITouch
@@ -328,10 +327,10 @@ class GameScene: SKScene {
                 touchScroll = 1
             }
             
-            if lastPositionNote > 900 || posicaodanotajapassou == true{
+            if lastPositionNote > 900 || lastNotePositionOutScreen == true{
                 disableScrollRight = false
                 disableScrollLeft = false
-                posicaodanotajapassou = true
+                lastNotePositionOutScreen = true
             }
         
             if touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia"  {
