@@ -193,7 +193,7 @@ class GameScene: SKScene {
         addButtons()
         addFirstNotes()
         playNote(initialSound)
-        
+        lastPositionNote = 0
     }
     
     private func addNotes(noteDurations: SKNode){
@@ -280,25 +280,25 @@ class GameScene: SKScene {
                 notes[index].removeFromParent()
             }
             notes.removeAll(keepCapacity: false)
+            lastNotePositionOutScreen = false
         }
     }
     
     private func undoButtonAction() {
-        if notes.count > 0 {
+        if notes.count > 0 && musicPlay == false{
             removeNoteAction(notes.last!)
             notes.removeLast()
+            lastNotePositionOutScreen = false
         }
     }
-    
+    var musicPlay = false
     private func playMusic() {
         var sound:String!
         var sound2:String!
-        
+        musicPlay = true
         sound = notes[countMusic].getSound()
-        
         runAction(SKAction .playSoundFileNamed(sound, waitForCompletion: true), completion: {
             if self.countMusic < self.notes.count-1 {
-                
                 let priorityy = DISPATCH_QUEUE_PRIORITY_DEFAULT
                 dispatch_async(dispatch_get_global_queue(priorityy, 0)) {
                     
@@ -311,7 +311,10 @@ class GameScene: SKScene {
                         self.MoveMusic()
                     }
                 }
-                
+            }
+            else{
+                println("So uma vez")
+                self.musicPlay = false
             }
         })
     }
@@ -335,13 +338,9 @@ class GameScene: SKScene {
             if touchedNode.name == nil {
                 touchScroll = 1
             }
-            
-            if lastPositionNote > 900 || lastNotePositionOutScreen == true || disableScrollLeft == false{
-                println("2")
                 disableScrollRight = false
                 disableScrollLeft = false
-                lastNotePositionOutScreen = true
-            }
+
             
             if touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia"  {
                 touchedNode.zPosition = 0
@@ -352,8 +351,12 @@ class GameScene: SKScene {
                     MoveScreen()
                 }
                 
-                if lastPositionNote > 900 {
+                if lastPositionNote < 900 {
+                    lastNotePositionOutScreen = false
+                }
+                if lastPositionNote >= 900 || lastNotePositionOutScreen == true{
                     println("5")
+                    lastNotePositionOutScreen = true
                     //Se houver mais notas do que mostrar na tela
                     Move()
                 }
@@ -362,13 +365,19 @@ class GameScene: SKScene {
             }
             else if cleanButton.containsPoint(location) {
                 cleanButtonAction()
+                musicPlay = false
             }
             else if musicButton.containsPoint(location) {
-                self.countMusic = 0
-                if self.notes.count != 0 {
-                    MoveStart()
-                    playMusic()
+                if musicPlay == false {
+                    self.countMusic = 0
+                    if self.notes.count != 0 {
+                        MoveStart()
+                        playMusic()
+                       
+                    }
+                    
                 }
+                
             }
             else if undoButton.containsPoint(location) {
                 undoButtonAction()
@@ -596,12 +605,12 @@ class GameScene: SKScene {
         touchNote = false
         touchScroll = 0
         println("End")
+        
         if (touchedNode.name == nil || touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia") && (dropNote == true) {
             returnToOriginPosition(note)
         }
         
         if touchedNode.name == "Note" + String(cont) {
-            
             var t = self.view?.bounds.size
             dropNote = false
             cont++
@@ -703,10 +712,10 @@ class GameScene: SKScene {
     }
     
     private func moveToAnimation(node: SKNode, position: CGPoint){
-        let animation = SKAction.moveTo(position, duration: 0.5)
+        let animation = SKAction.moveTo(position, duration: 0.3)
         node.runAction(animation, withKey: "move")
         
-        node.runAction(SKAction.waitForDuration(0.5), completion: {
+        node.runAction(SKAction.waitForDuration(0.3), completion: {
             self.happiness(node.position)
         })
         
