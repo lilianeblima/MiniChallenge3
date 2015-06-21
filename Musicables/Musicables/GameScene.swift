@@ -311,6 +311,8 @@ class GameScene: SKScene {
     
     // MARK: - Touch Events
 
+    var posicaodanotajapassou = false
+    
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         let t = touches.first
         let touchItem = t as! UITouch
@@ -325,13 +327,20 @@ class GameScene: SKScene {
             if touchedNode.name == nil && (disableScrollRight == false || disableScrollLeft == false){
                 touchScroll = 1
             }
+            
+            if lastPositionNote > 900 || posicaodanotajapassou == true{
+                disableScrollRight = false
+                disableScrollLeft = false
+                posicaodanotajapassou = true
+            }
         
             if touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia"  {
                 touchedNode.zPosition = 0
                 
                 if lastPositionNote > 900 {
+                    
                     //Se houver mais notas do que mostrar na tela
-                    disableScrollRight = false
+                    
                     
                     Move()
                 }
@@ -357,18 +366,24 @@ class GameScene: SKScene {
         var t1 = notes.last?.position
         if notes.count != 0 {
             var t2 = notes[0].position.x
-            println(t2)
+            //println(t2)
         }
         
         if touchScroll == 1  {
             
             scrollX = Int(touchInitScroll.x) - Int(touchEndScroll.x)
             scrollY = Int(touchInitScroll.y) - Int(touchEndScroll.y)
+            println(scrollX)
+            println(scrollY)
             
             if scrollY <= 100 {
                 if scrollX > 0 && disableScrollLeft == false {
-                    if scrollX > 10{
-                        println("Esquerda")
+                    if scrollX > 5{
+                       // println("Esquerda")
+                        println(notes.last?.position.x)
+                        if notes.last?.position.x <= spaceFromStart{
+                            disableScrollLeft = true
+                        }
                         Left()
                     }
                 }
@@ -381,7 +396,7 @@ class GameScene: SKScene {
 
                         }
                         
-                        println("Direita")
+                        //println("Direita")
                         Right()
                     }
                 }
@@ -489,12 +504,14 @@ class GameScene: SKScene {
     
     
     private func Left(){
-        if notes.count != 0 {
+        if disableScrollLeft == false {
+            if notes.count != 0 {
+                for var v = 0; v < notes.count; v++ {
+                    notes[v].position.x = CGFloat((Int(notes[v].position.x) - abs(scrollX)/30))
+                }
+            }
+        }
         
-        for var v = 0; v < notes.count; v++ {
-            notes[v].position.x = CGFloat((Int(notes[v].position.x) - abs(scrollX)/30))
-        }
-        }
     }
     
     private func Right(){
