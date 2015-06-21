@@ -357,6 +357,7 @@ class GameScene: SKScene {
             else if musicButton.containsPoint(location) {
                 self.countMusic = 0
                 if self.notes.count != 0 {
+                    MoveStart()
                     playMusic()
                 }
             }
@@ -459,7 +460,6 @@ class GameScene: SKScene {
             var resp = Int(notes[0].position.x) - Int(notes.last!.position.x)
 
             for var v = 0; v < notes.count; v++ {
-                
                 if v == 0 {
                  notes[v].position.x = CGFloat(Int(notes[v+1].position.x) - 83)
                 }
@@ -468,6 +468,36 @@ class GameScene: SKScene {
                 println("nota[ \(v)] =  \(notes[v].position.x)")
             }
             scrollHasBeenActivaed = false
+        }
+    }
+    
+    var ns0:CGFloat!
+    var nsf:CGFloat!
+    
+    private func MoveStart(){
+        if notes.count >= 2 {
+            for var p = 0; p < notes.count; p++ {
+                if notes[p].position.x >= (spaceFromStart - 10) && notes[p].position.x <= (spaceFromStart+10){
+                    nsf = notes[p].position.x
+                    break
+                }
+                
+                else if notes[p].position.x >= (spaceFromStart - 20) && notes[p].position.x <= (spaceFromStart+20){
+                    nsf = notes[p].position.x
+                    break
+                }
+            }
+            ns0 = notes[0].position.x
+            for var v = 0; v < notes.count; v++ {
+                
+                if v == 0 {
+                    notes[v].position.x = CGFloat(Int(notes[v+1].position.x) - 83)
+                }
+                println("nota[ \(v)] =  \(notes[v].position.x)")
+                notes[v].position.x = CGFloat(Int(notes[v].position.x) + abs(Int(ns0 - nsf)))
+                println("nota[ \(v)] =  \(notes[v].position.x)")
+            }
+            scrollHasBeenActivaed = true
         }
     }
     
