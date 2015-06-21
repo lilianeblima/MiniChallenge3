@@ -458,7 +458,7 @@ class GameScene: SKScene {
                 break
                 }
                 
-                else if notes[p].position.x >= (spaceFromStart - 20) && notes[p].position.x <= (spaceFromStart+20){
+                else if notes[p].position.x >= (spaceFromStart - 83) && notes[p].position.x <= (spaceFromStart+83){
                     n0 = notes[p].position.x
                 }
             }
@@ -481,14 +481,19 @@ class GameScene: SKScene {
     
     private func MoveStart(){
         println("MoveStart")
+        
+        
+       
         if notes.count >= 2 {
             for var p = 0; p < notes.count; p++ {
+                println("n[ \(p)]= \(notes[p].position.x)")
+                println("SpacoCompara = \(spaceFromStart)")
                 if notes[p].position.x >= (spaceFromStart - 10) && notes[p].position.x <= (spaceFromStart+10){
                     nsf = notes[p].position.x
                     break
                 }
                 
-                else if notes[p].position.x >= (spaceFromStart - 20) && notes[p].position.x <= (spaceFromStart+20){
+                else if notes[p].position.x >= (spaceFromStart - 83) && notes[p].position.x <= (spaceFromStart+83){
                     nsf = notes[p].position.x
                 }
             }
@@ -669,7 +674,6 @@ class GameScene: SKScene {
         node.runAction(liftUp, withKey: "pickup")
         let liftDown = SKAction.scaleTo(0.5, duration: 0.2)
         node.runAction(liftUp, withKey: "pickdown")
-        
         let arrayAnimation: [SKAction] = [
             liftUp,
             liftDown
