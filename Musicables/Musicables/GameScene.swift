@@ -323,7 +323,7 @@ class GameScene: SKScene {
         
 
         if touchNote == false {
-            if touchedNode.name == nil && (disableScrollRight == false || disableScrollLeft == false){
+            if touchedNode.name == nil {
                 touchScroll = 1
             }
             
