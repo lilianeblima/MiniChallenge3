@@ -106,8 +106,8 @@ class GameScene: SKScene {
     var scrollY = 0
     
     var lastPositionNote: CGFloat!
-    var disableScrollRight = true
-    var disableScrollLeft = true
+    var disableScrollRight = false
+    var disableScrollLeft = false
     var lastNotePositionOutScreen = false
     
     // Initial Sound
