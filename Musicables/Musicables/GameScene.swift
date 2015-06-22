@@ -224,9 +224,8 @@ class GameScene: SKScene {
         addChild(note)
         scaleUp(note)
     }
-    
+    let clave = SKSpriteNode(imageNamed: "clave")
     private func addClave() {
-        let clave = SKSpriteNode(imageNamed: "clave")
         clave.size = CGSize(width: 250, height: 500)
         clave.position = CGPointMake(100, 380)
         clave.name = "clave"
@@ -469,6 +468,7 @@ class GameScene: SKScene {
         if disableScrollLeft == false {
             scrollHasBeenActivaed = true
             if notes.count != 0 {
+                clave.position.x = CGFloat(Int(clave.position.x) - abs(scrollX)/30)
                 for var v = 0; v < notes.count; v++ {
                     notes[v].position.x = CGFloat((Int(notes[v].position.x) - abs(scrollX)/30))
                 }
@@ -481,6 +481,7 @@ class GameScene: SKScene {
         if disableScrollRight == false {
             scrollHasBeenActivaed = true
             if notes.count != 0 {
+                clave.position.x = CGFloat(Int(clave.position.x) + abs(scrollX)/30)
                 for var v = 0; v < notes.count; v++ {
                     notes[v].position.x = CGFloat((Int(notes[v].position.x) + abs(scrollX)/30))
                 }
@@ -493,6 +494,7 @@ class GameScene: SKScene {
     private func Move(){
         println("Move")
         if notes.count != 0 {
+            clave.position.x = CGFloat(Int(clave.position.x) - 170)
             for var v = 0; v < notes.count; v++ {
                 notes[v].position.x = CGFloat((Int(notes[v].position.x) - 170))
             }
@@ -517,7 +519,8 @@ class GameScene: SKScene {
        
             var nf = notes.last!.position.x
             var resp = Int(notes[0].position.x) - Int(notes.last!.position.x)
-
+            clave.position.x = CGFloat(Int(clave.position.x) + Int(n0 - nf))
+            
             for var v = 0; v < notes.count; v++ {
                 if v == 0 {
                  notes[v].position.x = CGFloat(Int(notes[v+1].position.x) - 83)
@@ -534,8 +537,6 @@ class GameScene: SKScene {
     private func MoveStart(){
         println("MoveStart")
         
-        
-       
         if notes.count >= 2 {
             for var p = 0; p < notes.count; p++ {
                 println("n[ \(p)]= \(notes[p].position.x)")
@@ -550,6 +551,7 @@ class GameScene: SKScene {
                 }
             }
             ns0 = notes[0].position.x
+            clave.position.x = CGFloat(Int(clave.position.x) + abs(Int(ns0 - nsf)))
             for var v = 0; v < notes.count; v++ {
                 
                 if v == 0 {
@@ -563,6 +565,7 @@ class GameScene: SKScene {
     
     private func MoveMusic(){
         println("MoveMusic")
+        clave.position.x = CGFloat(Int(clave.position.x) - 5 * 15)
         for var v = 0; v < notes.count; v++ {
             notes[v].position.x = CGFloat(Int(notes[v].position.x) - 5 * 15)
         }
