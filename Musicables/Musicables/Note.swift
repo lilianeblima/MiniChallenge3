@@ -51,8 +51,7 @@ class Note: SKSpriteNode {
         
     }
     
-    func setNote(tone: String) {
-        
+    func setNote(tone: String, noteSelect: Note) {
         let notes = noteDictionary.valueForKey(duration) as! NSDictionary
         nota = notes.valueForKey(tone) as! String
         println(nota)
@@ -62,7 +61,9 @@ class Note: SKSpriteNode {
         }
         
         else if (tone == "si1" || tone == "do2" || tone == "re2" || tone == "mi2" || tone == "fa2" || tone == "sol2" || tone == "la2") && note.duration == "minima" {
+            noteSelect.anchorPoint.y = 0.7
             if tone == "la2" {
+                
                 note.texture = SKTexture(imageNamed: "minima_invertida_riscado")
             }
             else {
@@ -71,6 +72,7 @@ class Note: SKSpriteNode {
         }
         
         else if (tone == "si1" || tone == "do2" || tone == "re2" || tone == "mi2" || tone == "fa2" || tone == "sol2" || tone == "la2") && note.duration == "seminima" {
+            noteSelect.anchorPoint.y = 0.7
             if tone == "la2" {
                 note.texture = SKTexture(imageNamed: "seminima_invertida_riscado")
             }
@@ -80,6 +82,7 @@ class Note: SKSpriteNode {
         }
         
         else if (tone == "si1" || tone == "do2" || tone == "re2" || tone == "mi2" || tone == "fa2" || tone == "sol2" || tone == "la2") && note.duration == "colcheia" {
+            noteSelect.anchorPoint.y = 0.7
             if tone == "la2" {
                 note.texture = SKTexture(imageNamed: "colcheia_invertida_riscado")
             }

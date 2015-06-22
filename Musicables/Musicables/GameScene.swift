@@ -48,8 +48,9 @@ class GameScene: SKScene {
     
     // Distance between notes.
     private let spaceFromStart: CGFloat = 256.0
-    private let spaceBetweenNotes: CGFloat = 82.7
-    
+   // private let spaceBetweenNotes: CGFloat = 82.7
+    private let spaceBetweenNotes: CGFloat = 100
+
     // Y-Axis note point coordinates are evenly distributed.
     private let YCoordinates: [CGFloat] = [
         192.0,
@@ -207,6 +208,19 @@ class GameScene: SKScene {
         note.position = CGPointMake(noteDurations.position.x, 100)
         note.name = "Note" + String(cont)
         note.zPosition = 15
+        println("Erro?")
+        println("AnchorPoint= \(note.anchorPoint)")
+        
+        if noteDurations.name! == "minima" {
+            note.anchorPoint.y = 0.36
+        }
+        
+        if noteDurations.name! == "seminima" || noteDurations.name! == "colcheia"{
+            note.anchorPoint.y = 0.32
+        }
+        
+      
+
         addChild(note)
         scaleUp(note)
     }
@@ -657,42 +671,37 @@ class GameScene: SKScene {
     private func callSetNote(tone: Int, note: Note) {
         switch(tone) {
         case 0:
-            note.setNote("do1")
+            note.setNote("do1",noteSelect: note)
         case 1:
-            note.setNote("re1")
+            note.setNote("re1",noteSelect: note)
         case 2:
-            note.setNote("mi1")
+            note.setNote("mi1",noteSelect: note)
         case 3:
-            note.setNote("fa1")
+            note.setNote("fa1",noteSelect: note)
         case 4:
-            note.setNote("sol1")
+            note.setNote("sol1",noteSelect: note)
         case 5:
-            note.setNote("la1")
+            note.setNote("la1",noteSelect: note)
         case 6:
-            note.setNote("si1")
+            note.setNote("si1",noteSelect: note)
         case 7:
-            note.setNote("do2")
+            note.setNote("do2",noteSelect: note)
         case 8:
-            note.setNote("re2")
+            note.setNote("re2",noteSelect: note)
         case 9:
-            note.setNote("mi2")
+            note.setNote("mi2",noteSelect: note)
         case 10:
-            note.setNote("fa2")
+            note.setNote("fa2",noteSelect: note)
         case 11:
-            note.setNote("sol2")
+            note.setNote("sol2",noteSelect: note)
         case 12:
-            note.setNote("la2")
+            note.setNote("la2",noteSelect: note)
         default:
-            note.setNote("do1")
+            note.setNote("do1",noteSelect: note)
         }
     }
     
     // MARK: - Animations
-    
-    private func animateElement() {
-        
-    }
-    
     private func happiness(pos: CGPoint) {
         var emitterNode = SKEmitterNode(fileNamed: "Particle.sks")
         emitterNode.particlePosition = pos
