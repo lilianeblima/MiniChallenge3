@@ -84,6 +84,8 @@ class GameScene: SKScene {
         UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0), // line
     ]
     
+    // Background Color Scene
+    let bgColorScene = UIColor(red: 111/255, green: 215/255, blue: 215/255, alpha: 1)
     
     // MARK: - Global Variables
     // Added Notes
@@ -104,6 +106,8 @@ class GameScene: SKScene {
     
     var scrollX = 0
     var scrollY = 0
+    let scrollIndicator = SKSpriteNode(imageNamed: "scroll_indicador")
+    
     
     var lastPositionNote: CGFloat!
     var disableScrollRight = false
@@ -185,7 +189,8 @@ class GameScene: SKScene {
     }
     
     override func didMoveToView(view: SKView) {
-        self.backgroundColor = SKColor.clearColor()
+        self.backgroundColor = bgColorScene
+        addClouds()
         addCleanButton()
         addMusicButton()
         addUndoButton()
@@ -274,6 +279,30 @@ class GameScene: SKScene {
         addChild(undoButton)
     }
     
+    private func addClouds() {
+        let cloud1 = SKSpriteNode(imageNamed: "nuvem")
+        cloud1.name = "cloud1"
+        cloud1.position = CGPointMake(150, 650)
+        cloud1.zPosition = 1
+        cloud1.setScale(0.3)
+        
+        let cloud2 = SKSpriteNode(imageNamed: "nuvem")
+        cloud2.name = "cloud2"
+        cloud2.position = CGPointMake(510, 650)
+        cloud2.zPosition = 1
+        cloud2.setScale(0.3)
+        
+        let cloud3 = SKSpriteNode(imageNamed: "nuvem")
+        cloud3.name = "cloud2"
+        cloud3.position = CGPointMake(875, 650)
+        cloud3.zPosition = 1
+        cloud3.setScale(0.3)
+    
+        addChild(cloud1)
+        addChild(cloud2)
+        addChild(cloud3)
+    }
+    
     func cleanButtonAction() {
         if notes.count > 0 {
             for var index = 0; index < notes.count; index++ {
@@ -333,6 +362,8 @@ class GameScene: SKScene {
         touchInitScroll = location
         firstSemibreve.userInteractionEnabled = false
         println("Began")
+        scrollIndicator.position = CGPointMake(1024/2-20, 100)
+        
         if touchNote == false {
             println("1")
             if touchedNode.name == nil {
@@ -605,7 +636,7 @@ class GameScene: SKScene {
         touchNote = false
         touchScroll = 0
         println("End")
-        
+
         if (touchedNode.name == nil || touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia") && (dropNote == true) {
             returnToOriginPosition(note)
         }
@@ -723,7 +754,7 @@ class GameScene: SKScene {
     
     private func removeNoteAction(note: Note) {
         note.zPosition = 200
-        let animation = SKAction.moveToY(-40, duration: 1)
+        let animation = SKAction.moveToY(-70, duration: 0.5)
         playNote(removeSound)
         note.runAction(animation, withKey: "remove")
         

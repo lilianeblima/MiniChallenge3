@@ -56,6 +56,52 @@ class Note: SKSpriteNode {
         let notes = noteDictionary.valueForKey(duration) as! NSDictionary
         nota = notes.valueForKey(tone) as! String
         println(nota)
+        
+        if (tone == "do1" || tone == "la2") && note.duration == "semibreve" {
+            note.texture = SKTexture(imageNamed: "semibreve_riscado")
+        }
+        
+        else if (tone == "si1" || tone == "do2" || tone == "re2" || tone == "mi2" || tone == "fa2" || tone == "sol2" || tone == "la2") && note.duration == "minima" {
+            if tone == "la2" {
+                note.texture = SKTexture(imageNamed: "minima_invertida_riscado")
+            }
+            else {
+                note.texture = SKTexture(imageNamed: "minima_invertida")
+            }
+        }
+        
+        else if (tone == "si1" || tone == "do2" || tone == "re2" || tone == "mi2" || tone == "fa2" || tone == "sol2" || tone == "la2") && note.duration == "seminima" {
+            if tone == "la2" {
+                note.texture = SKTexture(imageNamed: "seminima_invertida_riscado")
+            }
+            else {
+                note.texture = SKTexture(imageNamed: "seminima_invertida")
+            }
+        }
+        
+        else if (tone == "si1" || tone == "do2" || tone == "re2" || tone == "mi2" || tone == "fa2" || tone == "sol2" || tone == "la2") && note.duration == "colcheia" {
+            if tone == "la2" {
+                note.texture = SKTexture(imageNamed: "colcheia_invertida_riscado")
+            }
+            else {
+                note.texture = SKTexture(imageNamed: "colcheia_invertida")
+            }
+        }
+        
+        else if (tone == "do1") && note.duration == "minima" {
+            note.texture = SKTexture(imageNamed: "minima_riscado")
+        }
+        
+        else if (tone == "do1") && note.duration == "seminima" {
+            note.texture = SKTexture(imageNamed: "seminima_riscado")
+        }
+            
+        else if (tone == "do1") && note.duration == "colcheia" {
+            note.texture = SKTexture(imageNamed: "colcheia_riscado")
+        }
+        
+        
+        
         play()
         
     }

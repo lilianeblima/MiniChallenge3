@@ -72,6 +72,7 @@
 		5E85A4331B0B572B00F0728F /* notinha.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E85A42F1B0B572B00F0728F /* notinha.png */; };
 		5E85A4361B0B579500F0728F /* bolinha.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E85A4341B0B579500F0728F /* bolinha.png */; };
 		5E85A4371B0B579500F0728F /* point2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5E85A4351B0B579500F0728F /* point2@2x.png */; };
+		5EC7D6C41B376A0200AB8F68 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EC7D6C31B376A0200AB8F68 /* Images.xcassets */; };
 		6164CE441B06105500D6D0B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6164CE431B06105500D6D0B8 /* AppDelegate.swift */; };
 		6164CE461B06105500D6D0B8 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 6164CE451B06105500D6D0B8 /* GameScene.sks */; };
 		6164CE481B06105500D6D0B8 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6164CE471B06105500D6D0B8 /* GameScene.swift */; };
@@ -160,6 +161,7 @@
 		5E85A42F1B0B572B00F0728F /* notinha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notinha.png; sourceTree = "<group>"; };
 		5E85A4341B0B579500F0728F /* bolinha.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bolinha.png; sourceTree = "<group>"; };
 		5E85A4351B0B579500F0728F /* point2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "point2@2x.png"; sourceTree = "<group>"; };
+		5EC7D6C31B376A0200AB8F68 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		6164CE3E1B06105500D6D0B8 /* Musicables.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musicables.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6164CE421B06105500D6D0B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6164CE431B06105500D6D0B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 			children = (
 				5E5E0C771B0DF2DB00CB4371 /* Sounds */,
 				5E85A42B1B0B571400F0728F /* Sprites */,
+				5EC7D6C31B376A0200AB8F68 /* Images.xcassets */,
 				E4F44C7D1B17349100BF65EE /* SKScrollSprite.swift */,
 				6164CE431B06105500D6D0B8 /* AppDelegate.swift */,
 				6164CE451B06105500D6D0B8 /* GameScene.sks */,
@@ -439,6 +442,7 @@
 				5E39B0D71B2A612F00649898 /* fa2_seminima.mp3 in Resources */,
 				5E85A4301B0B572B00F0728F /* point.png in Resources */,
 				5E0767781B29571E001C088B /* fa2_semibreve.mp3 in Resources */,
+				5EC7D6C41B376A0200AB8F68 /* Images.xcassets in Resources */,
 				5E39B0D01B2A612F00649898 /* fa1_seminima.mp3 in Resources */,
 				5E39B0DD1B2A681C00649898 /* do1_colcheia.mp3 in Resources */,
 				5E6D77C91B173D280052EBEB /* Particle.sks in Resources */,
