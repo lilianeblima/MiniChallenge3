@@ -673,33 +673,33 @@ class GameScene: SKScene {
     private func callSetNote(tone: Int, note: Note) {
         switch(tone) {
         case 0:
-            note.setNote("do1")
+            note.setNote("do1",noteSelect: note)
         case 1:
-            note.setNote("re1")
+            note.setNote("re1",noteSelect: note)
         case 2:
-            note.setNote("mi1")
+            note.setNote("mi1",noteSelect: note)
         case 3:
-            note.setNote("fa1")
+            note.setNote("fa1",noteSelect: note)
         case 4:
-            note.setNote("sol1")
+            note.setNote("sol1",noteSelect: note)
         case 5:
-            note.setNote("la1")
+            note.setNote("la1",noteSelect: note)
         case 6:
-            note.setNote("si1")
+            note.setNote("si1",noteSelect: note)
         case 7:
-            note.setNote("do2")
+            note.setNote("do2",noteSelect: note)
         case 8:
-            note.setNote("re2")
+            note.setNote("re2",noteSelect: note)
         case 9:
-            note.setNote("mi2")
+            note.setNote("mi2",noteSelect: note)
         case 10:
-            note.setNote("fa2")
+            note.setNote("fa2",noteSelect: note)
         case 11:
-            note.setNote("sol2")
+            note.setNote("sol2",noteSelect: note)
         case 12:
-            note.setNote("la2")
+            note.setNote("la2",noteSelect: note)
         default:
-            note.setNote("do1")
+            note.setNote("do1",noteSelect: note)
         }
     }
     
