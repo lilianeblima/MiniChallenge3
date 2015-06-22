@@ -52,7 +52,6 @@ class Note: SKSpriteNode {
     }
     
     func setNote(tone: String) {
-        
         let notes = noteDictionary.valueForKey(duration) as! NSDictionary
         nota = notes.valueForKey(tone) as! String
         println(nota)

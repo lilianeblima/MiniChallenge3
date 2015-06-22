@@ -48,8 +48,9 @@ class GameScene: SKScene {
     
     // Distance between notes.
     private let spaceFromStart: CGFloat = 256.0
-    private let spaceBetweenNotes: CGFloat = 82.7
-    
+   // private let spaceBetweenNotes: CGFloat = 82.7
+    private let spaceBetweenNotes: CGFloat = 100
+
     // Y-Axis note point coordinates are evenly distributed.
     private let YCoordinates: [CGFloat] = [
         192.0,
@@ -206,6 +207,19 @@ class GameScene: SKScene {
         note.position = CGPointMake(noteDurations.position.x, 100)
         note.name = "Note" + String(cont)
         note.zPosition = 15
+        println("Erro?")
+        println("AnchorPoint= \(note.anchorPoint)")
+        
+        if noteDurations.name! == "minima" {
+            note.anchorPoint.y = 0.36
+        }
+        
+        if noteDurations.name! == "seminima" || noteDurations.name! == "colcheia"{
+            note.anchorPoint.y = 0.32
+        }
+        
+      
+
         addChild(note)
         scaleUp(note)
     }
@@ -690,11 +704,6 @@ class GameScene: SKScene {
     }
     
     // MARK: - Animations
-    
-    private func animateElement() {
-        
-    }
-    
     private func happiness(pos: CGPoint) {
         var emitterNode = SKEmitterNode(fileNamed: "Particle.sks")
         emitterNode.particlePosition = pos
