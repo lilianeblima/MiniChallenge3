@@ -108,10 +108,10 @@ class IntroductionScene: SKScene {
         title.setScale(0.7)
         addChild(title)
         
-//        let group = SKSpriteNode(imageNamed: "grupinho")
-//        group.position = CGPointMake(400, 200)
+//        let group = SKSpriteNode(imageNamed: "group")
+//        group.position = CGPointMake(800, 150)
 //        group.zPosition = 1
-//        group.setScale(0.55)
+//        group.setScale(0.3)
 //        addChild(group)
         
         
