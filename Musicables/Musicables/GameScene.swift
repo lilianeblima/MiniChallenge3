@@ -191,6 +191,7 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         self.backgroundColor = bgColorScene
         addClouds()
+        addClave()
         addCleanButton()
         addMusicButton()
         addUndoButton()
@@ -210,91 +211,88 @@ class GameScene: SKScene {
         scaleUp(note)
     }
     
+    private func addClave() {
+        let clave = SKSpriteNode(imageNamed: "clave")
+        clave.size = CGSize(width: 250, height: 500)
+        clave.position = CGPointMake(100, 380)
+        clave.name = "clave"
+        
+        addChild(clave)
+    }
+    
     private func addFirstNotes() {
-        firstSemibreve = SKSpriteNode(color: UIColor.purpleColor(), size: CGSize(width: 50, height: 50))
+        
+        firstSemibreve = SKSpriteNode(imageNamed: "button_semibreve")
+        firstSemibreve.size = CGSize(width: 100, height: 100)
         firstSemibreve.position = CGPointMake(100, 100)
         firstSemibreve.name = "semibreve"
-        firstSemibreve.zPosition = 0
         
-        firstMinima = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 50, height: 50))
-        firstMinima.position = CGPointMake(200, 100)
+        firstMinima = SKSpriteNode(imageNamed: "button_minima")
+        firstMinima.size = CGSize(width: 100, height: 100)
+        firstMinima.position = CGPointMake(225, 100)
         firstMinima.name = "minima"
         
-        firstSeminima = SKSpriteNode(color: UIColor.whiteColor(), size: CGSize(width: 50, height: 50))
-        firstSeminima.position = CGPointMake(300, 100)
+        firstSeminima = SKSpriteNode(imageNamed: "button_seminima")
+        firstSeminima.size = CGSize(width: 100, height: 100)
+        firstSeminima.position = CGPointMake(350, 100)
         firstSeminima.name = "seminima"
         
-        firstColcheia = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 50, height: 50))
-        firstColcheia.position = CGPointMake(400, 100)
+        firstColcheia = SKSpriteNode(imageNamed: "button_colcheia")
+        firstColcheia.size = CGSize(width: 100, height: 100)
+        firstColcheia.position = CGPointMake(475, 100)
         firstColcheia.name = "colcheia"
         
         addChild(firstSemibreve)
         addChild(firstMinima)
         addChild(firstSeminima)
         addChild(firstColcheia)
+        
     }
     
     private func addMusicButton() {
-        musicButton = SKSpriteNode(color: UIColor.blueColor(), size: CGSize(width: 150, height: 100))
-        musicButton.name = "cleanButton"
-        musicButton.position = CGPointMake(600, 150)
+        musicButton = SKSpriteNode(texture: SKTexture(imageNamed: "play"), size: CGSize(width: 100, height: 100))
+        musicButton.name = "playButton"
+        musicButton.position = CGPointMake(700, 100)
         musicButton.zPosition = 1
         
-        let labelMusicButton = SKLabelNode(fontNamed: "Helvetica")
-        labelMusicButton.fontSize = CGFloat(22.0)
-        labelMusicButton.fontColor = SKColor.whiteColor()
-        labelMusicButton.text = "Music"
-        
-        musicButton.addChild(labelMusicButton)
         addChild(musicButton)
     }
     
     private func addCleanButton() {
-        cleanButton = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: 150, height: 100))
+        cleanButton = SKSpriteNode(texture: SKTexture(imageNamed: "clean"), size: CGSize(width: 100, height: 100))
         cleanButton.name = "cleanButton"
-        cleanButton.position = CGPointMake(750, 150)
+        cleanButton.position = CGPointMake(825, 100)
         cleanButton.zPosition = 1
         
-        let labelCleanButton = SKLabelNode(fontNamed: "Helvetica")
-        labelCleanButton.fontSize = CGFloat(22.0)
-        labelCleanButton.fontColor = SKColor.whiteColor()
-        labelCleanButton.text = "Limpar"
-        
-        cleanButton.addChild(labelCleanButton)
         addChild(cleanButton)
     }
     
     private func addUndoButton() {
-        undoButton = SKSpriteNode(color: UIColor.greenColor(), size: CGSize(width: 150, height: 100))
+        undoButton = SKSpriteNode(texture: SKTexture(imageNamed: "undo"), size: CGSize(width: 100, height: 100))
         undoButton.name = "undoButton"
-        undoButton.position = CGPointMake(900, 150)
+        undoButton.position = CGPointMake(950, 100)
         undoButton.zPosition = 1
         
-        let labelUndoButton = SKLabelNode(fontNamed: "Helvetica")
-        labelUndoButton.fontSize = CGFloat(22.0)
-        labelUndoButton.fontColor = SKColor.whiteColor()
-        labelUndoButton.text = "Desfazer"
-        
-        undoButton.addChild(labelUndoButton)
         addChild(undoButton)
     }
+
     
     private func addClouds() {
         let cloud1 = SKSpriteNode(imageNamed: "nuvem")
         cloud1.name = "cloud1"
-        cloud1.position = CGPointMake(150, 650)
+        cloud1.position = CGPointMake(150, 675)
         cloud1.zPosition = 1
         cloud1.setScale(0.3)
         
         let cloud2 = SKSpriteNode(imageNamed: "nuvem")
         cloud2.name = "cloud2"
-        cloud2.position = CGPointMake(510, 650)
+        cloud2.position = CGPointMake(510, 675)
         cloud2.zPosition = 1
         cloud2.setScale(0.3)
         
         let cloud3 = SKSpriteNode(imageNamed: "nuvem")
         cloud3.name = "cloud2"
-        cloud3.position = CGPointMake(875, 650)
+        cloud3.position = CGPointMake(875, 675)
         cloud3.zPosition = 1
         cloud3.setScale(0.3)
     
@@ -371,7 +369,6 @@ class GameScene: SKScene {
             }
                 disableScrollRight = false
                 disableScrollLeft = false
-
             
             if touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia"  {
                 touchedNode.zPosition = 0
@@ -398,6 +395,7 @@ class GameScene: SKScene {
                 cleanButtonAction()
                 musicPlay = false
             }
+                
             else if musicButton.containsPoint(location) {
                 if musicPlay == false {
                     self.countMusic = 0
