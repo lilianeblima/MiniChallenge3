@@ -794,7 +794,7 @@ class GameScene: SKScene {
     
     private func removeNoteAction(note: Note) {
         note.zPosition = 200
-        let animation = SKAction.moveToY(-100, duration: 0.5)
+        let animation = SKAction.moveToY(-100, duration: 0.3)
         playNote(removeSound)
         note.runAction(animation, withKey: "remove")
         
