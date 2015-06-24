@@ -218,9 +218,6 @@ class GameScene: SKScene {
         if noteDurations.name! == "seminima" || noteDurations.name! == "colcheia"{
             note.anchorPoint.y = 0.32
         }
-        
-      
-
         addChild(note)
         scaleUp(note)
     }
@@ -315,6 +312,7 @@ class GameScene: SKScene {
     }
     
     func cleanButtonAction() {
+        clave.removeFromParent()
         if notes.count > 0 {
             for var index = 0; index < notes.count; index++ {
                 notes[index].removeFromParent()
@@ -322,6 +320,8 @@ class GameScene: SKScene {
             notes.removeAll(keepCapacity: false)
             lastNotePositionOutScreen = false
         }
+        
+        addClave()
     }
     
     private func undoButtonAction() {
@@ -329,6 +329,7 @@ class GameScene: SKScene {
             removeNoteAction(notes.last!)
             notes.removeLast()
             lastNotePositionOutScreen = false
+            MoveUndo()
         }
     }
     var musicPlay = false
@@ -364,6 +365,7 @@ class GameScene: SKScene {
     }
     
     // MARK: - Touch Events
+    var jaDeslocouUmaVez = false
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
         let t = touches.first
@@ -394,11 +396,13 @@ class GameScene: SKScene {
                 
                 if lastPositionNote < 900 {
                     lastNotePositionOutScreen = false
+                    //jaDeslocouUmaVez = false
                 }
                 if lastPositionNote >= 900 || lastNotePositionOutScreen == true{
                     println("5")
                     lastNotePositionOutScreen = true
                     //Se houver mais notas do que mostrar na tela
+                    jaDeslocouUmaVez = true
                     Move()
                 }
                 addNotes(touchedNode)
@@ -539,8 +543,6 @@ class GameScene: SKScene {
         
         if notes.count >= 2 {
             for var p = 0; p < notes.count; p++ {
-                println("n[ \(p)]= \(notes[p].position.x)")
-                println("SpacoCompara = \(spaceFromStart)")
                 if notes[p].position.x >= (spaceFromStart - 10) && notes[p].position.x <= (spaceFromStart+10){
                     nsf = notes[p].position.x
                     break
@@ -569,10 +571,38 @@ class GameScene: SKScene {
         for var v = 0; v < notes.count; v++ {
             notes[v].position.x = CGFloat(Int(notes[v].position.x) - 5 * 15)
         }
-
-        
     }
     
+    var nt:CGFloat!
+    var espacoInicialClave:CFloat!
+    
+    private func MoveUndo(){
+        if notes.count != 0 && jaDeslocouUmaVez == true && notes.last?.position.x <= spaceFromStart{
+
+                for var p = 0; p < notes.count; p++ {
+                    if notes[p].position.x >= (spaceFromStart - 10) && notes[p].position.x <= (spaceFromStart+10){
+                        nt = notes[p].position.x
+                        break
+                    }
+                        
+                    else if notes[p].position.x >= (spaceFromStart - 83) && notes[p].position.x <= (spaceFromStart+83){
+                        nt = notes[p].position.x
+                    }
+                }
+                ns0 = 900
+                clave.position.x = CGFloat(Int(clave.position.x) + abs(Int(ns0 - nt)/4))
+                for var v = 0; v < notes.count; v++ {
+                    
+                    if v == 0 {
+                        notes[v].position.x = CGFloat(Int(notes[v+1].position.x) - 83)
+                    }
+                    notes[v].position.x = CGFloat(Int(notes[v].position.x) + abs(Int(ns0 - nt)/4))
+                }
+
+            
+        }
+    }
+
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         println("Moved")
         let t = touches.first
