@@ -407,6 +407,9 @@ class GameScene: SKScene {
                 }
                 addNotes(touchedNode)
                 
+                
+                
+                
             }
             else if cleanButton.containsPoint(location) {
                 cleanButtonAction()
@@ -778,7 +781,7 @@ class GameScene: SKScene {
         node.runAction(SKAction.sequence(arrayAnimation))
         
     }
-    
+ 
     private func playNoteAnimation(node: SKNode){
         let liftUp = SKAction.scaleTo(0.7, duration: 0.2)
         node.runAction(liftUp, withKey: "pickup")
@@ -791,11 +794,19 @@ class GameScene: SKScene {
         ]
         
         node.runAction(SKAction.sequence(arrayAnimation))
+    
     }
     
     private func scaleDown(node: SKNode){
+        let originalScale = SKAction.scaleTo(1, duration: 0.2)
         let dropDown = SKAction.scaleTo(0.4, duration: 0.2)
         node.runAction(dropDown, withKey: "drop")
+        let arrayAnimation: [SKAction] = [
+            originalScale,
+            dropDown
+        ]
+        
+        node.runAction(SKAction.sequence(arrayAnimation))
     }
     
     private func moveToAnimation(node: SKNode, position: CGPoint){
