@@ -590,7 +590,10 @@ class GameScene: SKScene {
                     }
                 }
                 ns0 = 900
+            
+            if notes.count > 2 {
                 clave.position.x = CGFloat(Int(clave.position.x) + abs(Int(ns0 - nt)/4))
+                
                 for var v = 0; v < notes.count; v++ {
                     
                     if v == 0 {
@@ -598,7 +601,20 @@ class GameScene: SKScene {
                     }
                     notes[v].position.x = CGFloat(Int(notes[v].position.x) + abs(Int(ns0 - nt)/4))
                 }
-
+            }
+            
+            else {
+                 clave.position = CGPointMake(100, 380)
+                for var v = 0; v < notes.count; v++ {
+                    if v == 0 {
+                        notes[v].position.x = spaceFromStart
+                    }
+                    else {
+                        notes[v].position.x = spaceFromStart + 83
+                    }
+                    
+                }
+            }
             
         }
     }
