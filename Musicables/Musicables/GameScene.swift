@@ -209,6 +209,7 @@ class GameScene: SKScene {
         note.name = "Note" + String(cont)
         note.zPosition = 15
         touchNote = true
+        touchScroll = 0
         //println("Erro?")
         //println("AnchorPoint= \(note.anchorPoint)")
         
@@ -377,18 +378,17 @@ class GameScene: SKScene {
         scrollIndicator.position = CGPointMake(1024/2-20, 100)
         
         if touchNote == false {
-            if touchedNode.name == nil {
+            if musicPlay == false {
                 touchScroll = 1
             }
+
                 disableScrollRight = false
                 disableScrollLeft = false
             
             if touchedNode.name == "semibreve" || touchedNode.name == "minima" || touchedNode.name == "seminima" || touchedNode.name == "colcheia"  {
                 touchedNode.zPosition = 0
                 
-                if scrollHasBeenActivaed == true {
-                    MoveScreen()
-                }
+                
                 
                 if lastPositionNote < 900 {
                     lastNotePositionOutScreen = false
@@ -400,7 +400,20 @@ class GameScene: SKScene {
                     jaDeslocouUmaVez = true
                     Move()
                 }
-                addNotes(touchedNode)
+                
+                
+                let priorityy = DISPATCH_QUEUE_PRIORITY_DEFAULT
+                dispatch_async(dispatch_get_global_queue(priorityy, 0)) {
+                    if self.scrollHasBeenActivaed == true {
+                        self.MoveScreen()
+                    }
+                    dispatch_async(dispatch_get_main_queue()) {
+                            self.addNotes(touchedNode)
+                    }
+                }
+                
+                
+                
                 
                 
             }
