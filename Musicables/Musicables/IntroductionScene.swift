@@ -13,8 +13,10 @@ import UIKit
 extension SKNode {
     class func unarchiveFromFile(file : String) -> SKNode? {
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
-            var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
-            var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
+            let sceneData =  NSData(contentsOfFile: path)
+            
+           // var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
+            var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
             let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
@@ -129,28 +131,19 @@ class IntroductionScene: SKScene {
         }
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        
         let t = touches.first
-        let touchItem = t as! UITouch
-        let location = touchItem.locationInNode(self)
+       // let touchItem = t as! UITouch
+        let location = t!.locationInNode(self)
         let touchedNode = nodeAtPoint(location)
         
         if touchedNode.name != nil{
             if touchedNode.name == "play"{
                 loadGameScene()
             }
-            //            switch touchedNode.name! {
-            //            case playImageName:
-            //                loadGameScene()
-            //                break
-            //            case loadImageName:
-            //                // TODO: Present LoadScene
-            //                break
-            //            case settImageName:
-            //                break
-            //            default:
-            //                println("No node has been touched.")
-            //            }
+
         }
     }
     

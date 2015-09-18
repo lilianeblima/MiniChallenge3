@@ -16,14 +16,24 @@ var audioPlayerSequence = AVAudioPlayer()
 func playNote(filename: String) {
     let url = NSBundle.mainBundle().URLForResource(filename, withExtension: nil)
     if url == nil {
-        println("Could not find file: \(filename)")
+        print("Could not find file: \(filename)")
         return
     }
     
-    var error: NSError? = nil
-    player = AVAudioPlayer(contentsOfURL: url, error: &error)
+    let _: NSError
+    do {
+    player = try AVAudioPlayer(contentsOfURL: url!)
+    } catch {
+        print("Error")
+    }
+   // throw VendingMachineError.InvalidSelection
+    
+    
+        
+        
+        //AVAudioPlayer(contentsOfURL: url, error: &error)
     if player == nil {
-        println("Could not create audio player: \(error)")
+        print("Could not create audio player: error)")
         return
     }
     
@@ -34,9 +44,13 @@ func playNote(filename: String) {
 
 let path = NSBundle.mainBundle().pathForResource("notes", ofType: "json")
 let json = NSData(contentsOfFile: path!)
-let noteDictionary = NSJSONSerialization.JSONObjectWithData(json!, options: .MutableContainers, error: nil) as! NSDictionary
+
+
+
+//NSJSONSerialization.JSONObjectWithData(json!, options: .MutableContainers, error: ErrorType) as! NSDictionary
 
 class Note: SKSpriteNode {
+    
     
     var tone: String!
     var duration: String!
@@ -51,10 +65,20 @@ class Note: SKSpriteNode {
         
     }
     
+    var newDictionary = NSDictionary()
+    
     func setNote(tone: String, noteSelect: Note) {
-        let notes = noteDictionary.valueForKey(duration) as! NSDictionary
+        do{
+            let noteDictionary = try NSJSONSerialization.JSONObjectWithData(json!, options: .MutableContainers) as! NSDictionary
+            newDictionary = noteDictionary
+        }catch{
+            print("Erro")
+        }
+        
+
+        let notes = newDictionary.valueForKey(duration) as! NSDictionary
         nota = notes.valueForKey(tone) as! String
-        println(nota)
+        print(nota)
         
         if (tone == "do1" || tone == "la2") && note.duration == "semibreve" {
             note.texture = SKTexture(imageNamed: "semibreve_riscado")
