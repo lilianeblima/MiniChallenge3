@@ -14,9 +14,7 @@ extension SKNode {
     class func unarchiveFromFile(file : String) -> SKNode? {
         if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
             let sceneData =  NSData(contentsOfFile: path)
-            
-           // var sceneData = NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe, error: nil)!
-            var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
+            let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
             
             archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
             let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
@@ -109,18 +107,6 @@ class IntroductionScene: SKScene {
         title.zPosition = 1
         title.setScale(0.7)
         addChild(title)
-        
-//        let group = SKSpriteNode(imageNamed: "group")
-//        group.position = CGPointMake(800, 150)
-//        group.zPosition = 1
-//        group.setScale(0.3)
-//        addChild(group)
-        
-        
-        
-        
-        //addBackground()
-        //addButtons()
         playNote(backgroundSound)
     }
     
@@ -132,10 +118,7 @@ class IntroductionScene: SKScene {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
-        
         let t = touches.first
-       // let touchItem = t as! UITouch
         let location = t!.locationInNode(self)
         let touchedNode = nodeAtPoint(location)
         

@@ -153,10 +153,10 @@ class GameScene: SKScene {
     }
     
     private func drawShape(YCoordinate YCoordinate: CGFloat, shape: StaveElements, color: UIColor) -> SKShapeNode {
-        var startPoint = CGPointMake(leftMargin, YCoordinate)
-        var endPoint = CGPointMake(lineLength, YCoordinate)
+        let startPoint = CGPointMake(leftMargin, YCoordinate)
+        let endPoint = CGPointMake(lineLength, YCoordinate)
         var points = [startPoint, endPoint]
-        var shapeNode = SKShapeNode(points: &points, count: points.count)
+        let shapeNode = SKShapeNode(points: &points, count: points.count)
         
         if shape == StaveElements.Line {
             shapeNode.lineWidth = lineWidth
@@ -201,7 +201,6 @@ class GameScene: SKScene {
         addFirstNotes()
         playNote(initialSound)
         lastPositionNote = 0
-        print("didMoveToView")
     }
     
     private func addNotes(noteDurations: SKNode){
@@ -224,7 +223,6 @@ class GameScene: SKScene {
             scaleUp(note)
         }
         
-        print("addNotes")
         
     }
     let clave = SKSpriteNode(imageNamed: "clave")
@@ -235,7 +233,6 @@ class GameScene: SKScene {
         clave.name = "clave"
         
         addChild(clave)
-        print("addClave")
     }
     
     private func addFirstNotes() {
@@ -264,7 +261,6 @@ class GameScene: SKScene {
         addChild(firstMinima)
         addChild(firstSeminima)
         addChild(firstColcheia)
-        print("addFirstNotes")
         
     }
     
@@ -275,7 +271,6 @@ class GameScene: SKScene {
         musicButton.zPosition = 1
         
         addChild(musicButton)
-        print("addMusicButton")
     }
     
     private func addCleanButton() {
@@ -334,7 +329,6 @@ class GameScene: SKScene {
         }
         
         addClave()
-        print("cleanButtonAction")
     }
     
     private func undoButtonAction() {
@@ -344,12 +338,10 @@ class GameScene: SKScene {
             lastNotePositionOutScreen = false
             MoveUndo()
         }
-        print("undoButtonAction")
     }
     var musicPlay = false
     private func playMusic() {
         var sound:String!
-        var sound2:String!
         musicPlay = true
         sound = notes[countMusic].getSound()
         runAction(SKAction .playSoundFileNamed(sound, waitForCompletion: true), completion: {
@@ -371,13 +363,10 @@ class GameScene: SKScene {
                 self.musicPlay = false
             }
         })
-        
-        print("playMusic")
     }
     
     func playSound(s:SKAction){
         runAction(s)
-        print("palySound")
     }
     
     var contaa = 0
@@ -449,10 +438,6 @@ class GameScene: SKScene {
                     y = 1
                     Move()
                 }
-                
-                let seconds = 0.1
-                let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-                var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
 
                 if musicPlay == false{
                     addNotes(touchedNode)
@@ -485,14 +470,12 @@ class GameScene: SKScene {
                 undoButtonAction()
             }
         }
-        
-        print("touchesBegan")
     }
     
     private func scroll() {
-        var t1 = notes.last?.position
+        _ = notes.last?.position
         if notes.count != 0 {
-            var t2 = notes[0].position.x
+            _ = notes[0].position.x
             
             if touchScroll == 1  {
                 scrollX = Int(touchInitScroll.x) - Int(touchEndScroll.x)
@@ -519,8 +502,6 @@ class GameScene: SKScene {
                 }
             }
         }
-        
-        print("scroll")
     }
     
     private func Left(){
@@ -533,8 +514,6 @@ class GameScene: SKScene {
                 }
             }
         }
-        
-        print("Left")
     }
     
     private func Right(){
@@ -547,8 +526,6 @@ class GameScene: SKScene {
                 }
             }
         }
-        
-        print("Right")
     }
     
     
@@ -560,15 +537,11 @@ class GameScene: SKScene {
             for var v = 0; v < notes.count; v++ {
                 notes[v].position.x = CGFloat((Int(notes[v].position.x) - 170))
                 q = 2
-                //println("notes.count= \(notes.count)")
                 lastPositionNote = notes.last!.position.x - CGFloat(170)
                 
             }
             lastPositionNote = notes.last?.position.x
-            
         }
-        
-        print("Move")
     }
     
     var n0: CGFloat!
@@ -588,7 +561,7 @@ class GameScene: SKScene {
                 }
             }
             
-            var nf = notes.last!.position.x
+           let nf = notes.last!.position.x
             var resp = Int(notes[0].position.x) - Int(notes.last!.position.x)
             clave.position.x = CGFloat(Int(clave.position.x) + Int(n0 - nf))
             
@@ -601,9 +574,7 @@ class GameScene: SKScene {
             }
             scrollHasBeenActivaed = false
             teste = 0
-            
         }
-        print("MoveScreen")
     }
     
     var ns0:CGFloat!
@@ -633,7 +604,6 @@ class GameScene: SKScene {
             scrollHasBeenActivaed = true
         }
         
-        print("MoveStart")
     }
     
     private func MoveMusic(){
@@ -641,18 +611,13 @@ class GameScene: SKScene {
         for var v = 0; v < notes.count; v++ {
             notes[v].position.x = CGFloat(Int(notes[v].position.x) - 6 * 15)
         }
-        print("MoveMusic")
     }
     
     var nt:CGFloat!
     var espacoInicialClave:CFloat!
     
     private func MoveUndo(){
-        print("Notes = \(notes.count)")
-        print("spaceFromStart = \(spaceFromStart)")
-        print("notes.last?.position.x = \(notes.last?.position.x)")
         if notes.count != 0  && notes.last?.position.x <= spaceFromStart{
-            print("Entrei")
             for var p = 0; p < notes.count; p++ {
                 if notes[p].position.x >= (spaceFromStart - 10) && notes[p].position.x <= (spaceFromStart+10){
                     nt = notes[p].position.x
@@ -691,8 +656,6 @@ class GameScene: SKScene {
             }
             
         }
-        
-        print("MoveUndo")
     }
     
     
@@ -712,46 +675,31 @@ class GameScene: SKScene {
             dropNote = true
             touchedNode.zPosition = 15
         }
-        
-        print("touchesMoved")
     }
     
     // MARK: Pinning Notes
     var b = 0
     private func pinNoteToElementPosition(touchedNode: Note, y: CGFloat) {
         touchedNode.zPosition = 1.0
-        var YCoordinate = y
+        let YCoordinate = y
         //touchedNode.position.y = YCoordinate
         var XCoordinate: CGFloat!
-        print("a0")
         if let lastNode = notes.last {
-            print("a1")
             // Add a space from the last added note's X coordinate.
             //touchedNode.position.x = (lastNode.position.x + spaceBetweenNotes)
             XCoordinate = (lastNode.position.x + spaceBetweenNotes)
-            //println("XCoordinate= \(XCoordinate)")
         } else {
-            print("a2")
-            //touchedNode.position.x = spaceFromStart
             XCoordinate = spaceFromStart
-            //  println("XCoordinate= \(XCoordinate)")
         }
         lastPositionNote = XCoordinate
-        // println("lastPosition = \(last)")
-        
         if lastPositionNote > 850 {
             b = 1
             self.y = 1
         }
         
-//        if teste != 2 {
-//            moveToAnimation(touchedNode, position: CGPoint(x: XCoordinate, y: YCoordinate))
-//        }
-        
-        
         let seconds = 0.1
         let delay = seconds * Double(NSEC_PER_SEC)  // nanoseconds per seconds
-        var dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         if teste == 2 {
             dispatch_after(dispatchTime, dispatch_get_main_queue(), {
                 
@@ -763,8 +711,6 @@ class GameScene: SKScene {
         else {
             moveToAnimation(touchedNode, position: CGPoint(x: XCoordinate, y: YCoordinate))
         }
-        
-        print("pinNoteToElementPosition")
     }
     
     private func isNodeAboveElement(touchedNode: Note) -> Bool {
@@ -789,14 +735,12 @@ class GameScene: SKScene {
                 return true
             }
         }
-         print("isNodeAboveElement")
         return false
        
     }
     
     private func returnToOriginPosition(node: SKNode) {
         node.removeFromParent()
-        print("returnToOriginPosition")
     }
     
     
@@ -816,19 +760,18 @@ class GameScene: SKScene {
         }
         
         if touchedNode.name == "Note" + String(cont) {
-            var t = self.view?.bounds.size
+            _ = self.view?.bounds.size
             dropNote = false
             cont++
             zPosition = 0
             scaleDown(touchedNode)
-            var touchedNote = touchedNode as! Note
+            let touchedNote = touchedNode as! Note
             if !isNodeAboveElement(touchedNote) {
                 touchNote = false
                 returnToOriginPosition(touchedNote)
             }
         }
         
-        print("touchesEnded")
     }
     
     private func callSetNote(tone: Int, note: Note) {
@@ -864,7 +807,6 @@ class GameScene: SKScene {
             note.setNote("do1",noteSelect: note)
         }
         
-        print("callSetNote")
     }
     
     // MARK: - Animations
@@ -873,7 +815,6 @@ class GameScene: SKScene {
         emitterNode!.particlePosition = pos
         self.addChild(emitterNode!)
         emitterNode!.zPosition = 0
-         print("happiness")
         return self.runAction(SKAction.waitForDuration(1),completion: {
             self.runAction(SKAction.waitForDuration(1), completion: {
                 emitterNode!.particleAlpha = 0
@@ -894,7 +835,6 @@ class GameScene: SKScene {
             liftDown
         ]
         node.runAction(SKAction.sequence(arrayAnimation))
-       print("scaleUp")
         
     }
     
@@ -909,7 +849,6 @@ class GameScene: SKScene {
             liftDown
         ]
         node.runAction(SKAction.sequence(arrayAnimation))
-        print("playNoteAnimation")
         
     }
     
@@ -923,7 +862,6 @@ class GameScene: SKScene {
         ]
         
         node.runAction(SKAction.sequence(arrayAnimation))
-        print("scaleDown")
     }
     
     var terminouAnimacao = false
@@ -937,7 +875,6 @@ class GameScene: SKScene {
             
             self.happiness(node.position)
         })
-        print("moveToAnimation")
     }
     
     private func removeNoteAction(note: Note) {
@@ -949,7 +886,6 @@ class GameScene: SKScene {
         note.runAction(SKAction.waitForDuration(2), completion: {
             note.removeFromParent()
         })
-        print("removeNoteAction")
     }
     
     
