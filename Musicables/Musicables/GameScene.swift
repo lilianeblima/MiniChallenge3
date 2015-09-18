@@ -132,24 +132,11 @@ class GameScene: SKScene {
         90.0,
     ]
     
-    private let actionButtonsNames = [
-        "backButton",
-        "playButton",
-        "saveButton",
-        "clearButton",
-        "undoButton"
-    ]
-    
-    
     // MARK: - View Creation
     
     private func addButtons() {
         var button: SKSpriteNode
         
-        for buttonName in actionButtonsNames {
-            button = SKSpriteNode(imageNamed: buttonName)
-            //            button.position = CGPointMake(actionButtonsXCoordinate, actionButtonsYCoordinates[])
-        }
     }
     
     private func drawShape(YCoordinate YCoordinate: CGFloat, shape: StaveElements, color: UIColor) -> SKShapeNode {
